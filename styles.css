@@ -15,6 +15,14 @@ body {
   margin-bottom: 20px; /* Jarak antara judul dan konten berikutnya */
 }
 
+.footer {
+  color: #ffffff; /* Warna teks footer */
+  padding: 10px;
+  width: 100%;
+  text-align: center;
+  bottom: 0;
+}
+
 h1 {
   font-size: 2em;
   margin: 0;
@@ -29,7 +37,8 @@ h2 {
 .wave-box {
   width: 90vw; /* Panjang hampir satu layar */
   max-width: 1000px;
-  height: 350px; /* Sesuaikan tinggi sesuai kebutuhan */
+  height: 30vw;
+  max-height: 350px;
   background-color: #444444; /* Warna latar belakang wave box */
   margin-bottom: 20px; /* Jarak antara wave box dan rectangle */
 }
@@ -43,25 +52,26 @@ h2 {
 .rectangle {
   width: 90vw; /* Panjang hampir satu layar */
   max-width: 1000px;
-  height: 150px;
-  background-color: #cccccc; /* Warna latar belakang persegi panjang */
+  height: 10vw;
+  max-height: 150px;
+  background-color: #1c1c1c; /* Warna latar belakang persegi panjang */
   display: flex;
   flex-direction: row; /* Segmen horizontal */
 }
 
 .segment {
   flex: 1; /* Membagi ruang secara merata */
-  border: 1px solid #333; /* Garis batas untuk melihat segmen */
+  border: 1px solid #1c1c1c; /* Garis batas untuk melihat segmen */
 }
 
 .segment1 {
-  background-color: #ff9999; /* Warna latar belakang segmen pertama */
+  background-color: #444444; /* Warna latar belakang segmen pertama */
 }
 
 .segment2 {
-  background-color: #99ff99; /* Warna latar belakang segmen kedua */
+  background-color: #444444; /* Warna latar belakang segmen kedua */
 }
 
 .segment3 {
-  background-color: #9999ff; /* Warna latar belakang segmen ketiga */
+  background-color: #444444; /* Warna latar belakang segmen ketiga */
 }
