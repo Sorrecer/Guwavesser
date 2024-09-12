@@ -44,7 +44,7 @@ function generateWave(n)
     return yInterp
 } 
 
-function generateSoundData(wave, duration, volume)
+function generateSoundData(wave, duration, volume) // make sure volume below 0.5
 {
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     const sampleRate = audioCtx.sampleRate;
@@ -63,7 +63,7 @@ function generateSoundData(wave, duration, volume)
         const leftIndex = Math.floor(pos);
         const rightIndex = Math.ceil(pos);
         if (leftIndex === rightIndex) {
-            frequency = arr[leftIndex];
+            frequency = wave[leftIndex];
         } else {
             // Otherwise, linearly interpolate between arr[leftIndex] and arr[rightIndex]
             const t = pos - leftIndex;
@@ -71,7 +71,7 @@ function generateSoundData(wave, duration, volume)
             frequency = interpolatedValue;
         }
         const t = i / sampleRate;
-        const amplitude = Math.sin(2 * Math.PI * Math.pow(2, frequency+1) * t) * volume;
+        const amplitude = Math.sin(2 * Math.PI * 440 * Math.pow(2, frequency+1) * t) * volume;
 
         data[i] = amplitude;
     }
@@ -83,16 +83,4 @@ function generateSoundData(wave, duration, volume)
     setTimeout(() => {
     source.stop();
     }, duration * 1000);
-
-
-
-
-
-
-
-
-    
-
-    return interpolatedArray;
-
 }
