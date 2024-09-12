@@ -8,7 +8,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
 }
 
 .header {
@@ -20,7 +19,7 @@ body {
   padding: 10px;
   width: 100%;
   text-align: center;
-  bottom: 0;
+  margin-top: 30px;
 }
 
 h1 {
@@ -39,8 +38,9 @@ h2 {
   max-width: 1000px;
   height: 30vw;
   max-height: 350px;
-  background-color: #444444; /* Warna latar belakang wave box */
-  margin-bottom: 20px; /* Jarak antara wave box dan rectangle */
+  background-color: #444444; /* Warna latar belakang canvas */
+  border: 1px solid #ffffff; /* Garis batas untuk canvas */
+  margin-bottom: 20px; /* Jarak antara canvas dan komponen berikutnya */
 }
 
 .rectangle-container {
@@ -52,8 +52,7 @@ h2 {
 .rectangle {
   width: 90vw; /* Panjang hampir satu layar */
   max-width: 1000px;
-  height: 10vw;
-  max-height: 150px;
+  height: 200px;
   background-color: #1c1c1c; /* Warna latar belakang persegi panjang */
   display: flex;
   flex-direction: row; /* Segmen horizontal */
@@ -62,16 +61,118 @@ h2 {
 .segment {
   flex: 1; /* Membagi ruang secara merata */
   border: 1px solid #1c1c1c; /* Garis batas untuk melihat segmen */
+  display: flex;
+  flex-direction: column; /* Mengatur isi segmen secara vertikal */
+  align-items: center; /* Menengahkan isi secara horizontal */
+  /* justify-content: space-around; */
 }
 
 .segment1 {
   background-color: #444444; /* Warna latar belakang segmen pertama */
+  justify-content: center;
 }
 
 .segment2 {
   background-color: #444444; /* Warna latar belakang segmen kedua */
+  justify-content: center;
 }
 
 .segment3 {
   background-color: #444444; /* Warna latar belakang segmen ketiga */
+}
+
+.segment3 button {
+  margin-top: 20px;
+}
+
+.segment button {
+  font-weight: bold;
+  background: linear-gradient(
+    135deg,
+    #a0a0a0,
+    #808080
+  ); /* Gradasi warna abu-abu */
+  border: none; /* Menghapus border default */
+  border-radius: 12px; /* Radius sudut yang lebih halus */
+  height: 40px; /* Tinggi tombol yang lebih besar */
+  width: 120px; /* Lebar tombol yang lebih besar */
+  color: #ffffff; /* Warna teks putih */
+  font-size: 16px; /* Ukuran font yang lebih besar */
+  cursor: pointer; /* Menambahkan pointer saat hover */
+  transition: background 0.3s, transform 0.2s; /* Efek transisi halus */
+}
+
+.segment button:hover {
+  background: linear-gradient(
+    135deg,
+    #808080,
+    #a0a0a0
+  ); /* Membalik gradasi saat hover */
+  transform: scale(1.05); /* Membesar sedikit saat hover */
+}
+
+.segment button:active {
+  background: linear-gradient(
+    135deg,
+    #7a7a7a,
+    #9e9e9e
+  ); /* Efek gradasi saat diklik */
+  transform: scale(0.98); /* Memperkecil sedikit saat diklik */
+}
+
+.volume-control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+}
+
+#volume-slider {
+  width: 200px; /* Lebar slider */
+}
+.segment2 label {
+  margin-top: 30px;
+}
+
+.accuracy {
+  height: 30px;
+  width: 80%; /* Menyesuaikan lebar kotak agar dapat dilihat dengan jelas */
+  max-width: 300px; /* Menyesuaikan lebar maksimal kotak accuracy */
+  background: linear-gradient(
+    to right,
+    #00ff00,
+    #ffff00,
+    #ff0000
+  ); /* Gradasi hijau ke kuning ke merah */
+  border-radius: 5px; /* Menambahkan sudut membulat pada kotak */
+  justify-content: center;
+  align-content: center;
+}
+
+.config-container {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Membuat dua kolom yang sama lebar */
+  gap: 10px; /* Jarak antara item */
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.config-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.config-item label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.config-item input[type="number"] {
+  width: 100px; /* Lebar input number */
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
 }
