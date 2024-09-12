@@ -176,38 +176,3 @@ h2 {
   border-radius: 4px;
   font-size: 16px;
 }
-
-.piano-roll-container {
-  display: flex;
-  overflow: auto;
-}
-
-.piano-roll-canvas {
-  background-color: #444444;
-  border: 1px solid #ffffff;
-}
-
-.piano-keys {
-  background-color: #333333;
-  width: 60px; /* Lebar piano keys */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px 0;
-}
-
-.piano-key {
-  height: 30px;
-  width: 100%;
-  background-color: #666666;
-  margin: 2px 0;
-  color: #ffffff;
-  text-align: center;
-  line-height: 30px;
-  border-radius: 4px;
-}
-
-.piano-key.white {
-  background-color: #ffffff;
-  color: #000000;
-}
