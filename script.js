@@ -44,7 +44,7 @@ function generateWave(n)
     return yInterp
 } 
 
-function generateSoundData(wave, duration, volume) // make sure volume below 0.5
+function generateSound(wave, duration, volume) // make sure volume below 0.5
 {
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     const sampleRate = audioCtx.sampleRate;
@@ -83,4 +83,24 @@ function generateSoundData(wave, duration, volume) // make sure volume below 0.5
     setTimeout(() => {
     source.stop();
     }, duration * 1000);
+}
+
+function drawWave(wave) //menunggu canvas
+{
+    const wi = canvas.width/(wave.length-1)
+    const h = canvas.height
+    ctx.strokeStyle = '#ffffff'; // Color of the line
+    ctx.lineWidth = 2; // Line width
+
+    ctx.beginPath();
+    for (let i = 0; i < wave.length-1; i++) {
+        ctx.moveTo(i*wi, (1-wave[i])*h); 
+        ctx.lineTo((i+1)*wi, (1-wave[i+1])*h);
+    }
+    ctx.stroke();
+} 
+
+function calculateScore(input, wave)
+{
+
 }
