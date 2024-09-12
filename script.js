@@ -42,4 +42,45 @@ function generateWave(n)
     }
 
     return yInterp
-}  
+} 
+
+function generateSoundData(wave, duration, volume) // make sure volume below 0.5
+{
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const sampleRate = audioCtx.sampleRate;
+
+    const numberOfSamples = Math.ceil(sampleRate * duration);
+    const buffer = audioCtx.createBuffer(1, numberOfSamples, sampleRate);
+    const data = buffer.getChannelData(0);
+
+    const m = wave.length;
+
+    // Calculate the scaling factor
+    const scale = (m - 1) / (numberOfSamples - 1);
+
+    for (let i = 0; i < numberOfSamples; i++) {
+        const pos = i * scale;
+        const leftIndex = Math.floor(pos);
+        const rightIndex = Math.ceil(pos);
+        if (leftIndex === rightIndex) {
+            frequency = wave[leftIndex];
+        } else {
+            // Otherwise, linearly interpolate between arr[leftIndex] and arr[rightIndex]
+            const t = pos - leftIndex;
+            const interpolatedValue = (1 - t) * wave[leftIndex] + t * wave[rightIndex];
+            frequency = interpolatedValue;
+        }
+        const t = i / sampleRate;
+        const amplitude = Math.sin(2 * Math.PI * 440 * Math.pow(2, frequency+1) * t) * volume;
+
+        data[i] = amplitude;
+    }
+    const source = audioCtx.createBufferSource();
+    source.buffer = buffer;
+    source.connect(audioCtx.destination);
+    source.start();
+
+    setTimeout(() => {
+    source.stop();
+    }, duration * 1000);
+}
