@@ -35,12 +35,95 @@ h2 {
 
 .wave-box {
   width: 90vw; /* Panjang hampir satu layar */
-  max-width: 1000px;
+  max-width: 1100px;
   height: 30vw;
   max-height: 350px;
   background-color: #444444; /* Warna latar belakang canvas */
   border: 1px solid #ffffff; /* Garis batas untuk canvas */
   margin-bottom: 20px; /* Jarak antara canvas dan komponen berikutnya */
+}
+
+.scroll-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Memungkinkan scroll pada kontainer */
+}
+
+.canvas-container {
+  width: 90vw; /* Lebar hampir satu layar */
+  max-width: 1100px;
+  height: 30vw;
+  max-height: 350px;
+  background-color: #444444; /* Warna latar belakang */
+  margin-bottom: 20px; /* Jarak antara wave box dan rectangle */
+  overflow: auto; /* Membuat container dapat di-scroll */
+}
+
+#drawingCanvas {
+  width: 1000px; /* Lebar canvas lebih besar dari container */
+  height: 1000px; /* Tinggi canvas lebih besar dari container */
+  background-color: #2c2c2c; /* Warna latar belakang canvas */
+  cursor: crosshair; /* Memberi kursor khusus saat menggambar */
+}
+
+.canvas-wrapper {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.notes-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 60px;
+  background-color: #333333;
+  position: relative;
+}
+
+.note {
+  width: 100%;
+  height: 50px;
+  margin-bottom: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  color: #ffffff;
+  font-weight: bold;
+  text-shadow: -1px -1px 0 #000, /* Bayangan di kiri atas */ 1px -1px 0 #000,
+    /* Bayangan di kanan atas */ -1px 1px 0 #000,
+    /* Bayangan di kiri bawah */ 1px 1px 0 #000; /* Bayangan di kanan bawah */
+}
+
+.high-note {
+  background-color: #ff6666; /* Merah untuk nada tertinggi */
+}
+
+.low-note {
+  background-color: #66ff66; /* Hijau untuk nada terendah */
+}
+
+/* Warna berbeda untuk tiap note */
+.note:nth-child(2) {
+  background-color: #ffcc66; /* Oranye */
+}
+
+.note:nth-child(3) {
+  background-color: #ffff66; /* Kuning */
+}
+
+.note:nth-child(4) {
+  background-color: #66ccff; /* Biru muda */
+}
+
+.note:nth-child(5) {
+  background-color: #6666ff; /* Biru */
+}
+
+.note:nth-child(6) {
+  background-color: #ff66ff; /* Ungu */
 }
 
 .rectangle-container {
