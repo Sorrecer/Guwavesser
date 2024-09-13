@@ -1,4 +1,7 @@
 const canvas = document.getElementById('drawingCanvas');
+const buttonPlay = document.getElementById('play');
+const buttonCheck = document.getElementById('check');
+const buttonReload = document.getElementById('reload');
 const ctx = canvas.getContext('2d');
 let cw = canvas.clientWidth;
 let ch = canvas.clientHeight;
@@ -56,7 +59,7 @@ function generateWave(n)
     return yInterp
 } 
 
-function generateSound(wave, duration, volume) // make sure volume below 0.5
+function generateSound(wave, duration, volume) // make sure volume is below 0.5
 {
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     const sampleRate = audioCtx.sampleRate;
@@ -66,34 +69,50 @@ function generateSound(wave, duration, volume) // make sure volume below 0.5
     const data = buffer.getChannelData(0);
 
     const m = wave.length;
-
-    // Calculate the scaling factor
     const scale = (m - 1) / (numberOfSamples - 1);
+
+    let phase = 0; // Initialize phase
+    const baseFrequency = 220; // Starting frequency
 
     for (let i = 0; i < numberOfSamples; i++) {
         const pos = i * scale;
         const leftIndex = Math.floor(pos);
         const rightIndex = Math.ceil(pos);
-        if (leftIndex === rightIndex) {
-            frequency = wave[leftIndex];
-        } else {
-            // Otherwise, linearly interpolate between arr[leftIndex] and arr[rightIndex]
-            const t = pos - leftIndex;
-            const interpolatedValue = (1 - t) * wave[leftIndex] + t * wave[rightIndex];
-            frequency = interpolatedValue;
-        }
-        const t = i / sampleRate;
-        const amplitude = Math.sin(2 * Math.PI * 220 * Math.pow(2, frequency) * t) * volume;
+        let waveValue;
 
+        if (leftIndex === rightIndex) {
+            waveValue = wave[leftIndex];
+        } else {
+            // Linearly interpolate between wave[leftIndex] and wave[rightIndex]
+            const t = pos - leftIndex;
+            waveValue = (1 - t) * wave[leftIndex] + t * wave[rightIndex];
+        }
+
+        const frequency = baseFrequency * Math.pow(2, waveValue*3); // Exponential scaling of frequency
+        const phaseIncrement = (2 * Math.PI * frequency) / sampleRate; // Increment phase smoothly based on frequency
+
+        // Calculate amplitude based on the current phase
+        const amplitude = Math.sin(phase) * volume;
+
+        // Store the sample
         data[i] = amplitude;
+
+        // Update the phase for the next sample
+        phase += phaseIncrement;
+
+        // Keep the phase in the range [0, 2π] to avoid overflow
+        if (phase > 2 * Math.PI) {
+            phase -= 2 * Math.PI;
+        }
     }
+
     const source = audioCtx.createBufferSource();
     source.buffer = buffer;
     source.connect(audioCtx.destination);
     source.start();
 
     setTimeout(() => {
-    source.stop();
+        source.stop();
     }, duration * 1000);
 }
 
@@ -168,7 +187,8 @@ function resizeCanvas()
 
 function reload(n = 3)
 {
-    nowAns = generateWave(n)
+    nowAns = generateWave(n);
+    nowWave = nowWave.fill(0);
     ctx.clearRect(0, 0, cw, ch);
     isDraw = true;
 }
@@ -183,9 +203,13 @@ canvas.addEventListener('mousedown', mouseDraw);
 canvas.addEventListener('mousemove', mouseMove);
 canvas.addEventListener('mouseup', mouseStop);
 canvas.addEventListener('mouseleave', mouseStop);
+buttonCheck.onclick = check;
+buttonPlay.onclick = ()=>{generateSound(nowAns, 2, 0.2)};
+buttonReload.onclick = ()=>{reload()};
 
 // Resize the canvas when the window resizes
 window.addEventListener('resize', resizeCanvas);
 
 // Initial resize
 resizeCanvas();
+reload();
