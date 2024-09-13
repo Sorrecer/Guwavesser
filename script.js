@@ -13,6 +13,8 @@ let isDrawing = false;
 let xb = -1
 let yb = -1
 
+
+
 function generateWave(n)
 { 
     // Generate random y values between 0 and 1
