@@ -186,7 +186,7 @@ function calculateScore(wav, ans)
     der /= resolution-1;
 
     let scdiff = Math.exp(Math.log(0.95)*1296*diff*diff);
-    let scder = 1-36*der;
+    let scder = 1-12*der;
     scder = scder > 0? scder:0;
     return 60*scdiff+40*scder;
 }
