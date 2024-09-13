@@ -135,6 +135,11 @@ function calculateScore(input, wave)
 
 }
 
+function resizeCanvas() {
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+}
+
 canvas.addEventListener('mousedown', mouseDraw);
 canvas.addEventListener('mousemove', mouseMove);
 canvas.addEventListener('mouseup', mouseStop);
