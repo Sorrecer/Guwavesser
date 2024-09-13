@@ -1,9 +1,3 @@
-const canvas = document.getElementById('drawingCanvas');
-const ctx = canvas.getContext('2d');
-let resolution = 100
-let nowWave = new Array(resolution).fill(0)
-let isDrawing = false;
-
 function generateWave(n)
 { 
     // Generate random y values between 0 and 1
@@ -91,11 +85,10 @@ function generateSound(wave, duration, volume) // make sure volume below 0.5
     }, duration * 1000);
 }
 
-
-function drawWave(wave)
+function drawWave(wave) //menunggu canvas
 {
-    const wi = canvas.width/(wave.length-1);
-    const h = canvas.height;
+    const wi = canvas.width/(wave.length-1)
+    const h = canvas.height
     ctx.strokeStyle = '#ffffff'; // Color of the line
     ctx.lineWidth = 2; // Line width
 
@@ -107,41 +100,7 @@ function drawWave(wave)
     ctx.stroke();
 } 
 
-function mouseDraw(e) {
-    isDrawing = true;
-}
-
-function mouseMove(e)
-{
-    if (!isDrawing) return
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    const w = canvas.width;
-    const h = canvas.height;
-    x = e.offsetX;
-    y = e.offsetY;
-
-    nowWave[Math.round(x*resolution/w)] = 1-y/h;
-    drawWave(nowWave);
-}
-
-function mouseStop(e)
-{
-    isDrawing = false;
-}
-
 function calculateScore(input, wave)
 {
 
 }
-
-canvas.addEventListener('mousedown', mouseDraw);
-canvas.addEventListener('mousemove', mouseMove);
-canvas.addEventListener('mouseup', mouseStop);
-canvas.addEventListener('mouseleave', mouseStop);
-
-// Resize the canvas when the window resizes
-window.addEventListener('resize', resizeCanvas);
-
-// Initial resize
-resizeCanvas();
