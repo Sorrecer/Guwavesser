@@ -34,20 +34,18 @@ h2 {
 }
 
 .wave-box {
-  width: 90vw; /* Panjang hampir satu layar */
+  width: 90vw; /* Width of the entire container */
   max-width: 1100px;
-  height: 30vw;
-  max-height: 350px;
-  background-color: #444444; /* Warna latar belakang canvas */
-  border: 1px solid #ffffff; /* Garis batas untuk canvas */
-  margin-bottom: 20px; /* Jarak antara canvas dan komponen berikutnya */
+  background-color: #444444;
+  border: 1px solid #ffffff;
+  margin-bottom: 20px;
 }
 
 .scroll-container {
   display: flex;
   width: 100%;
   height: 100%;
-  overflow: auto; /* Memungkinkan scroll pada kontainer */
+  overflow: auto; /* Enable scrolling */
 }
 
 .canvas-container {
@@ -61,10 +59,9 @@ h2 {
 }
 
 #drawingCanvas {
-  width: 1000px; /* Lebar canvas lebih besar dari container */
-  height: 1000px; /* Tinggi canvas lebih besar dari container */
-  background-color: #2c2c2c; /* Warna latar belakang canvas */
-  cursor: crosshair; /* Memberi kursor khusus saat menggambar */
+  flex-grow: 1; /* Take up the remaining space */
+  background-color: #2c2c2c;
+  cursor: crosshair;
 }
 
 .canvas-wrapper {
@@ -76,25 +73,22 @@ h2 {
 .notes-box {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  width: 60px;
+  justify-content: flex-start;
+  width: 60px; /* Fixed width for the notes */
   background-color: #333333;
-  position: relative;
+  flex-shrink: 0; /* Prevent shrinking */
 }
 
 .note {
   width: 100%;
   height: 50px;
-  margin-bottom: 9px;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   color: #ffffff;
   font-weight: bold;
-  text-shadow: -1px -1px 0 #000, /* Bayangan di kiri atas */ 1px -1px 0 #000,
-    /* Bayangan di kanan atas */ -1px 1px 0 #000,
-    /* Bayangan di kiri bawah */ 1px 1px 0 #000; /* Bayangan di kanan bawah */
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
 .high-note {
