@@ -92,35 +92,15 @@ h2 {
   font-weight: bold;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
+  user-select: none;
 }
 
-.high-note {
-  background-color: #ff6666; /* Merah untuk nada tertinggi */
+.note.sharp {
+  background-color: gray;
 }
 
-.low-note {
-  background-color: #66ff66; /* Hijau untuk nada terendah */
-}
-
-/* Warna berbeda untuk tiap note */
-.note:nth-child(2) {
-  background-color: #ffcc66; /* Oranye */
-}
-
-.note:nth-child(3) {
-  background-color: #ffff66; /* Kuning */
-}
-
-.note:nth-child(4) {
-  background-color: #66ccff; /* Biru muda */
-}
-
-.note:nth-child(5) {
-  background-color: #6666ff; /* Biru */
-}
-
-.note:nth-child(6) {
-  background-color: #ff66ff; /* Ungu */
+.note:not(.sharp) {
+  background-color: rgb(226, 226, 226);
 }
 
 .rectangle-container {
