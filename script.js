@@ -1,9 +1,11 @@
 const canvas = document.getElementById('drawingCanvas');
 const ctx = canvas.getContext('2d');
-const cw = canvas.clientWidth;
-const ch = canvas.clientHeight;
+let cw = canvas.clientWidth;
+let ch = canvas.clientHeight;
+let isDraw = true;
 let resolution = 100
 let nowWave = new Array(resolution).fill(0)
+let nowAns = new Array(resolution).fill(0)
 let isDrawing = false;
 let xb = -1
 let yb = -1
@@ -81,7 +83,7 @@ function generateSound(wave, duration, volume) // make sure volume below 0.5
             frequency = interpolatedValue;
         }
         const t = i / sampleRate;
-        const amplitude = Math.sin(2 * Math.PI * 440 * Math.pow(2, frequency+1) * t) * volume;
+        const amplitude = Math.sin(2 * Math.PI * 220 * Math.pow(2, frequency) * t) * volume;
 
         data[i] = amplitude;
     }
@@ -96,10 +98,10 @@ function generateSound(wave, duration, volume) // make sure volume below 0.5
 }
 
 
-function drawWave(wave)
+function drawWave(wave, color = '#ffffff')
 {
     const wi = cw/(wave.length-1);
-    ctx.strokeStyle = '#ffffff'; // Color of the line
+    ctx.strokeStyle = color; // Color of the line
     ctx.lineWidth = 2; // Line width
 
     ctx.beginPath();
@@ -111,7 +113,7 @@ function drawWave(wave)
 } 
 
 function mouseDraw(e) {
-    isDrawing = true;
+    if(isDraw) isDrawing = true;
     xb = -1
     yb = -1
 }
@@ -120,7 +122,7 @@ function mouseMove(e)
 {
     if (!isDrawing) return
     
-    ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+    ctx.clearRect(0, 0, cw, ch);
 
     x = e.offsetX;
     y = e.offsetY;
@@ -156,9 +158,25 @@ function calculateScore(input, wave)
 
 }
 
-function resizeCanvas() {
+function resizeCanvas()
+{
     canvas.width = canvas.clientWidth;
     canvas.height = canvas.clientHeight;
+    cw = canvas.clientWidth;
+    ch = canvas.clientHeight;
+}
+
+function reload(n = 3)
+{
+    nowAns = generateWave(n)
+    ctx.clearRect(0, 0, cw, ch);
+    isDraw = true;
+}
+
+function check()
+{
+    drawWave(nowAns, '#808080');
+    isDraw = false;
 }
 
 canvas.addEventListener('mousedown', mouseDraw);
