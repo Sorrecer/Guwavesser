@@ -201,8 +201,8 @@ function resizeCanvas()
 
 function reload(n = 3)
 {
-    //nowAns = generateWave(n);
-    nowAns = nowAns.fill(0.5);
+    nowAns = generateWave(n);
+    //nowAns = nowAns.fill(0.5);
     nowWave = nowWave.fill(0);
     ctx.clearRect(0, 0, cw, ch);
     isDraw = true;
