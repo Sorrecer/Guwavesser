@@ -1,7 +1,5 @@
 const canvas = document.getElementById('drawingCanvas');
 const ctx = canvas.getContext('2d');
-const cw = canvas.clientWidth;
-const ch = canvas.clientHeight;
 let resolution = 100
 let nowWave = new Array(resolution).fill(0)
 let isDrawing = false;
@@ -96,14 +94,15 @@ function generateSound(wave, duration, volume) // make sure volume below 0.5
 
 function drawWave(wave)
 {
-    const wi = cw/(wave.length-1);
+    const wi = canvas.width/(wave.length-1);
+    const h = canvas.height;
     ctx.strokeStyle = '#ffffff'; // Color of the line
     ctx.lineWidth = 2; // Line width
 
     ctx.beginPath();
     for (let i = 0; i < wave.length-1; i++) {
-        ctx.moveTo(i*wi, (1-wave[i])*ch); 
-        ctx.lineTo((i+1)*wi, (1-wave[i+1])*ch);
+        ctx.moveTo(i*wi, (1-wave[i])*h); 
+        ctx.lineTo((i+1)*wi, (1-wave[i+1])*h);
     }
     ctx.stroke();
 } 
@@ -115,13 +114,14 @@ function mouseDraw(e) {
 function mouseMove(e)
 {
     if (!isDrawing) return
-    
-    ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    const w = canvas.width;
+    const h = canvas.height;
     x = e.offsetX;
     y = e.offsetY;
 
-    nowWave[Math.round(x*resolution/cw)] = 1-y/ch;
+    nowWave[Math.round(x*resolution/w)] = 1-y/h;
     drawWave(nowWave);
 }
 
