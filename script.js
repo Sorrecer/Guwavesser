@@ -5,6 +5,8 @@ const ch = canvas.clientHeight;
 let resolution = 100
 let nowWave = new Array(resolution).fill(0)
 let isDrawing = false;
+let xb = -1
+let yb = -1
 
 function generateWave(n)
 { 
@@ -110,6 +112,8 @@ function drawWave(wave)
 
 function mouseDraw(e) {
     isDrawing = true;
+    xb = -1
+    yb = -1
 }
 
 function mouseMove(e)
@@ -121,13 +125,30 @@ function mouseMove(e)
     x = e.offsetX;
     y = e.offsetY;
 
-    nowWave[Math.round(x*resolution/cw)] = 1-y/ch;
+    xn = Math.round(x*resolution/cw);
+    yn = 1-y/ch;
+
+    if (xb != -1){
+        const dif = Math.abs(xn-xb)+1
+        const dir = Math.sign(xn-xb)
+        const ydiff = yn - yb;
+        for(let i = 0; i < dif; i++){
+            nowWave[i*dir+xb] = yb + (ydiff/dif)*i;
+        }
+    }
+    else{
+        nowWave[xn] = 1-y/ch;
+    }
+    yb = yn;
+    xb = xn;
     drawWave(nowWave);
 }
 
 function mouseStop(e)
 {
     isDrawing = false;
+    xb = -1
+    yb = -1
 }
 
 function calculateScore(input, wave)
