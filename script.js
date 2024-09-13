@@ -24,8 +24,6 @@ function generateWave(n)
     let x = Array.from({ length: n - 2 }, () => Math.random());
     x = [0, ...x.sort(), 1];  // Ensure first is 0 and last is 1
 
-    // Resolution for interpolation
-    const resolution = 100;
     const yInterp = [];
 
     // Helper function for cubic interpolation between two points with stationary points (tangents are zero)
@@ -174,9 +172,23 @@ function mouseStop(e)
     yb = -1
 }
 
-function calculateScore(input, wave)
+function calculateScore(wav, ans)
 {
+    let diff = 0;
+    let der = 0;
+    for(let i = 0; i < resolution; i++){
+        diff += Math.abs(wav[i] - ans[i]);
+    }
+    for(let i = 0; i < resolution-1; i++){
+        der += Math.abs((wav[i+1] - wav[i]) - (ans[i+1] - ans[i]));
+    }
+    diff /= resolution;
+    der /= resolution-1;
 
+    let scdiff = Math.exp(Math.log(0.95)*1296*diff*diff);
+    let scder = 1-36*der;
+    scder = scder > 0? scder:0;
+    return 60*scdiff+40*scder;
 }
 
 function resizeCanvas()
@@ -189,7 +201,8 @@ function resizeCanvas()
 
 function reload(n = 3)
 {
-    nowAns = generateWave(n);
+    //nowAns = generateWave(n);
+    nowAns = nowAns.fill(0.5);
     nowWave = nowWave.fill(0);
     ctx.clearRect(0, 0, cw, ch);
     isDraw = true;
@@ -198,6 +211,7 @@ function reload(n = 3)
 function check()
 {
     drawWave(nowAns, '#808080');
+    console.log(calculateScore(nowWave, nowAns));
     isDraw = false;
 }
 
