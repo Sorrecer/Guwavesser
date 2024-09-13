@@ -206,7 +206,15 @@ canvas.addEventListener('mousemove', mouseMove);
 canvas.addEventListener('mouseup', mouseStop);
 canvas.addEventListener('mouseleave', mouseStop);
 buttonCheck.onclick = check;
-buttonPlay.onclick = ()=>{generateSound(nowAns, 2, 0.2)};
+buttonPlay.onclick = ()=>{
+    generateSound(nowAns, 2, 0.2); 
+    const movingLine = document.getElementById("movingLine");
+    movingLine.style.animation = "moveLine 2s linear forwards";
+
+    movingLine.addEventListener("animationend", function () {
+        movingLine.style.animation = ""; // Reset animasi setelah selesai
+    });
+};
 buttonReload.onclick = ()=>{reload()};
 
 // Resize the canvas when the window resizes

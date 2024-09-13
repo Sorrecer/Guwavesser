@@ -167,17 +167,5 @@
     </div>
 
     <script src="script.js"></script>
-    <script src="draw.js"></script>
-    <script src="piano.js"></script>
-    <script>
-      document.getElementById("play").addEventListener("click", function () {
-        const movingLine = document.getElementById("movingLine");
-        movingLine.style.animation = "moveLine 2s linear forwards";
-
-        movingLine.addEventListener("animationend", function () {
-          movingLine.style.animation = ""; // Reset animasi setelah selesai
-        });
-      });
-    </script>
   </body>
 </html>
