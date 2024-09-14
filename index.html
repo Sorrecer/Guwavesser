@@ -94,7 +94,7 @@
 
         <!-- Elemen garis -->
         <div class="moving-line" id="movingLine"></div>
-        
+
         <!-- drawing canvas -->
         <canvas id="drawingCanvas"></canvas>
       </div>
@@ -108,7 +108,7 @@
           <!-- slider -->
           <!-- volume slider -->
           <div class="volume-control">
-            <label for="volume-slider">Volume:</label>
+            <label for="volume-slider" style="font-weight: bold; margin-bottom: 10px;">Volume:</label>
             <input
               type="range"
               id="volume-slider"
@@ -121,41 +121,65 @@
         </div>
         <div class="segment segment2">
           <button id="check">Check it!</button>
-          <label for="accuracy">Accuracy:</label>
+          <label for="accuracy" style="font-weight: bold; margin-bottom: 10px;">Accuracy:</label>
           <div class="accuracy">
             <h2 style="color: black">100%</h2>
           </div>
         </div>
         <div class="segment segment3">
-          <button id="reload">Reload</button>
+          <button id="reload">New Sound</button>
           <div class="config-container">
-            <div class="config-item">
-              <label for="points">Points:</label>
+            <div class="config-item slider">
+              <label for="Resolution" style="margin-top: 30px"
+                >Resolution:</label
+              >
               <input
-                type="number"
-                id="points"
-                name="points"
+                type="range"
+                id="Resolution"
                 min="0"
-                value="10"
+                max="6"
+                step="1"
+                value="0"
               />
+              <span id="resolutionValue">25</span>
             </div>
-            <div class="config-item">
-              <label for="min">Min:</label>
-              <input type="number" id="min" name="min" min="0" value="0" />
-            </div>
-            <div class="config-item">
-              <label for="length">Length:</label>
+            <div class="config-item slider">
+              <!-- Resolution Slider -->
+              <label for="pointsSlider">Points:</label>
               <input
-                type="number"
-                id="length"
-                name="length"
-                min="0"
-                value="50"
+                type="range"
+                id="pointsSlider"
+                min="2"
+                max="8"
+                step="1"
+                value="2"
               />
+              <span id="pointsValue">2</span>
             </div>
-            <div class="config-item">
-              <label for="max">Max:</label>
-              <input type="number" id="max" name="max" min="0" value="100" />
+            <div class="config-item dropdown">
+              <!-- Pitch Difficulty Dropdown -->
+              <label for="pitchDifficulty">Pitch Difficulty:</label>
+              <select id="pitchDifficulty">
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+              </select>
+            </div>
+            <div class="config-item dropdown">
+              <!-- Easing Dropdown -->
+              <label for="easing">Easing:</label>
+              <select id="easing">
+                <option value="cubic">Cubic Interpolation (easier)</option>
+                <option value="ease">Ease In/Out/Inout (harder)</option>
+              </select>
+            </div>
+            <div class="config-item dropdown">
+              <!-- Line Helper Dropdown -->
+              <label for="lineHelper">Line Helper:</label>
+              <select id="lineHelper">
+                <option value="on">On</option>
+                <option value="off">Off</option>
+              </select>
             </div>
           </div>
         </div>
@@ -167,5 +191,49 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+      // Array nilai logaritmik untuk Points
+      const logValues = [25, 50, 100, 200, 400, 800, 1600];
+
+      // Points slider
+      const slider = document.getElementById("Resolution");
+      const sliderValueDisplay = document.getElementById("resolutionValue");
+
+      // Fungsi untuk memperbarui nilai points saat slider digeser
+      slider.addEventListener("input", function () {
+        const index = parseInt(slider.value); // Nilai dari slider (0–6)
+        const value = logValues[index]; // Mengambil nilai logaritmik dari array
+        sliderValueDisplay.textContent = value; // Memperbarui tampilan nilai
+      });
+
+      // Resolution slider
+      const resolutionSlider = document.getElementById("pointsSlider");
+      const resolutionValueDisplay = document.getElementById("pointsValue");
+
+      // Fungsi untuk memperbarui nilai resolusi saat slider digeser
+      resolutionSlider.addEventListener("input", function () {
+        resolutionValueDisplay.textContent = resolutionSlider.value; // Tampilkan nilai slider langsung
+      });
+
+      // Mengambil nilai dari dropdown untuk pitch difficulty, easing, dan line helper
+      const pitchDifficulty = document.getElementById("pitchDifficulty");
+      const easing = document.getElementById("easing");
+      const lineHelper = document.getElementById("lineHelper");
+
+      // Menangkap perubahan pada dropdown pitch difficulty
+      pitchDifficulty.addEventListener("change", function () {
+        console.log("Pitch Difficulty:", pitchDifficulty.value);
+      });
+
+      // Menangkap perubahan pada dropdown easing
+      easing.addEventListener("change", function () {
+        console.log("Easing:", easing.value);
+      });
+
+      // Menangkap perubahan pada dropdown line helper
+      lineHelper.addEventListener("change", function () {
+        console.log("Line Helper:", lineHelper.value);
+      });
+    </script>
   </body>
 </html>
