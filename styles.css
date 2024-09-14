@@ -59,7 +59,7 @@ h2 {
 .moving-line {
   width: 2px;
   height: 100%;
-  height: 350px;
+  height: 100%;
   background-color: rgb(255, 0, 0);
   position: absolute; /* Posisi absolut dalam scroll-container */
   left: 60px; /* Mulai dari kanan notes-box (notes-box memiliki lebar 60px) */
