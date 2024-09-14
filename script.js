@@ -11,11 +11,18 @@ const optionLine = document.getElementById('line');
 const sliderVolume = document.getElementById('volume');
 const sliderDuration = document.getElementById('duration');
 
+const displayResolution = document.getElementById("resolutionValue");
+const displayPoints = document.getElementById("pointsValue");
+
 const ctx = canvas.getContext('2d');
 let cw = canvas.clientWidth;
 let ch = canvas.clientHeight;
 let isDraw = true;
 let resolution = 100
+let points = 3
+let pitch = 1
+let volume = 0.5
+let duration = 2
 let nowWave = new Array(resolution).fill(0)
 let nowAns = new Array(resolution).fill(0)
 let isDrawing = false;
@@ -59,7 +66,7 @@ function generateWave(n)
 
                 // Perform cubic Hermite interpolation with stationary points
                 const yValue = cubicHermiteStationary(y[j], y[j + 1], t);
-                yInterp.push(yValue);
+                yInterp.push(yValue*pitch+(1-pitch)/2);
                 break;
             }
         }
@@ -154,6 +161,7 @@ function mouseMove(e)
 
     x = e.offsetX;
     y = e.offsetY;
+    
 
     xn = Math.round(x*resolution/cw);
     yn = 1-y/ch;
@@ -208,11 +216,11 @@ function resizeCanvas()
     ch = canvas.clientHeight;
 }
 
-function reload(n = 3)
+function reload()
 {
-    nowAns = generateWave(n);
+    nowAns = generateWave(points);
     //nowAns = nowAns.fill(0.5);
-    nowWave = nowWave.fill(0);
+    nowWave = new Array(resolution).fill(0)
     ctx.clearRect(0, 0, cw, ch);
     isDraw = true;
 }
@@ -231,7 +239,7 @@ canvas.addEventListener('mouseup', mouseStop);
 canvas.addEventListener('mouseleave', mouseStop);
 buttonCheck.onclick = check;
 buttonPlay.onclick = ()=>{
-    generateSound(nowAns, 2, 0.2); 
+    generateSound(nowAns, duration, volume); 
     const movingLine = document.getElementById("movingLine");
     movingLine.style.animation = "moveLine 2s linear forwards";
 
@@ -242,13 +250,19 @@ buttonPlay.onclick = ()=>{
 buttonReload.onclick = ()=>{reload()};
 window.addEventListener('resize', resizeCanvas);
 
-sliderResolution.onchange = ()=>{};
-sliderPoints.onchange = ()=>{};
-optionPitch.onchange = ()=>{};
+sliderResolution.oninput = ()=>{
+    resolution = 25*Math.pow(2,Number(sliderResolution.value));
+    displayResolution.textContent = resolution;
+};
+sliderPoints.oninput = ()=>{
+    points = Number(sliderPoints.value);
+    displayPoints.textContent = points;
+};
+optionPitch.onchange = ()=>{pitch = Number(optionPitch.value)};
 optionEasing.onchange = ()=>{};
 optionLine.onchange = ()=>{};
-sliderVolume.onchange = ()=>{};
-sliderDuration.onchange = ()=>{};
+sliderVolume.onchange = ()=>{volume = sliderVolume.value};
+//sliderDuration.onchange = ()=>{duration = sliderDuration.value};
 
 // Initial
 resizeCanvas();
