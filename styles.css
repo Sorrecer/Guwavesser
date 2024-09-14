@@ -41,30 +41,28 @@ h2 {
   background-color: #444444; /* Warna latar belakang canvas */
   border: 1px solid #ffffff; /* Garis batas untuk canvas */
   margin-bottom: 20px; /* Jarak antara canvas dan komponen berikutnya */
-  width: 100%;
-  height: 100%;
   overflow: auto; /* Memungkinkan scroll pada kontainer */
 }
 
 .scroll-container {
   height: fit-content;
   display: flex;
+  position: relative; /* Penting untuk membuat moving-line relatif terhadap container */
 }
 
-.canvas-container {
-  background-color: #444444; /* Warna latar belakang */
-  margin-bottom: 20px; /* Jarak antara wave box dan rectangle */
-  overflow: auto; /* Membuat container dapat di-scroll */
+.notes-box {
+  width: 60px;
+  background-color: #333333;
+  flex-shrink: 0; /* Mencegah notes-box mengecil jika ada overflow */
 }
 
 .moving-line {
   width: 2px;
   height: 100%;
-  display: flex;
   height: 350px;
-  background-color: rgb(255, 255, 255);
-  margin-left: 60px;
-  position: absolute;
+  background-color: rgb(255, 0, 0);
+  position: absolute; /* Posisi absolut dalam scroll-container */
+  left: 60px; /* Mulai dari kanan notes-box (notes-box memiliki lebar 60px) */
   z-index: 1; /* Pastikan garis berada di atas canvas */
 }
 
@@ -73,7 +71,7 @@ h2 {
     left: 60px; /* Mulai dari sebelah kanan notes-box */
   }
   to {
-    left: calc(1060px); /* Gerak sampai ke ujung kanan */
+    left: calc(1060px - 2px); /* Gerak sampai ke ujung kanan canvas */
   }
 }
 
@@ -83,12 +81,6 @@ h2 {
   cursor: crosshair; /* Memberi kursor khusus saat menggambar */
   background-image: linear-gradient(to bottom, #5c5c5c 1px, transparent 1px);
   background-size: 100% 20px; /* Jarak antar garis adalah 20px */
-}
-
-.canvas-wrapper {
-  display: flex;
-  width: 100%;
-  height: 100%;
 }
 
 .notes-box {
