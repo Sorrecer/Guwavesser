@@ -1,7 +1,16 @@
 const canvas = document.getElementById('drawingCanvas');
+
 const buttonPlay = document.getElementById('play');
 const buttonCheck = document.getElementById('check');
 const buttonReload = document.getElementById('reload');
+const sliderResolution = document.getElementById('resolution');
+const sliderPoints = document.getElementById('points');
+const optionPitch = document.getElementById('pitch');
+const optionEasing = document.getElementById('easing');
+const optionLine = document.getElementById('line');
+const sliderVolume = document.getElementById('volume');
+const sliderDuration = document.getElementById('duration');
+
 const ctx = canvas.getContext('2d');
 let cw = canvas.clientWidth;
 let ch = canvas.clientHeight;
@@ -215,6 +224,7 @@ function check()
     isDraw = false;
 }
 
+// Event Listeners
 canvas.addEventListener('mousedown', mouseDraw);
 canvas.addEventListener('mousemove', mouseMove);
 canvas.addEventListener('mouseup', mouseStop);
@@ -230,10 +240,16 @@ buttonPlay.onclick = ()=>{
     });
 };
 buttonReload.onclick = ()=>{reload()};
-
-// Resize the canvas when the window resizes
 window.addEventListener('resize', resizeCanvas);
 
-// Initial resize
+sliderResolution.onchange = ()=>{};
+sliderPoints.onchange = ()=>{};
+optionPitch.onchange = ()=>{};
+optionEasing.onchange = ()=>{};
+optionLine.onchange = ()=>{};
+sliderVolume.onchange = ()=>{};
+sliderDuration.onchange = ()=>{};
+
+// Initial
 resizeCanvas();
 reload();
