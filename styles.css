@@ -208,12 +208,12 @@ h2 {
 .duration-control {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   margin-top: 30px;
 }
 
 #volume-slider {
-  width: 200px; /* Lebar slider */
+  width: 300px; /* Lebar slider */
 }
 .segment2 label {
   margin-top: 30px;
