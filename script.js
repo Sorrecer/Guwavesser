@@ -13,6 +13,8 @@ const sliderDuration = document.getElementById('duration');
 
 const displayResolution = document.getElementById("resolutionValue");
 const displayPoints = document.getElementById("pointsValue");
+const displayVolume = document.getElementById("volumeValue");
+const displayDuration = document.getElementById("durationValue");
 
 const ctx = canvas.getContext('2d');
 let cw = canvas.clientWidth;
@@ -241,7 +243,7 @@ buttonCheck.onclick = check;
 buttonPlay.onclick = ()=>{
     generateSound(nowAns, duration, volume); 
     const movingLine = document.getElementById("movingLine");
-    movingLine.style.animation = "moveLine 2s linear forwards";
+    movingLine.style.animation = "moveLine "+duration+"s linear forwards";
 
     movingLine.addEventListener("animationend", function () {
         movingLine.style.animation = ""; // Reset animasi setelah selesai
@@ -261,8 +263,14 @@ sliderPoints.oninput = ()=>{
 optionPitch.onchange = ()=>{pitch = Number(optionPitch.value)};
 optionEasing.onchange = ()=>{};
 optionLine.onchange = ()=>{};
-sliderVolume.onchange = ()=>{volume = sliderVolume.value};
-//sliderDuration.onchange = ()=>{duration = sliderDuration.value};
+sliderVolume.oninput = ()=>{
+    volume = sliderVolume.value;
+    displayVolume.textContent = Math.round(volume*100)+"%";
+};
+sliderDuration.oninput = ()=>{
+    duration = Number(sliderDuration.value);
+    displayDuration.textContent = duration + " s";
+};
 
 // Initial
 resizeCanvas();
