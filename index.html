@@ -150,8 +150,10 @@
           <label for="accuracy" style="font-weight: bold; margin-bottom: 10px"
             >Accuracy:</label
           >
-          <div class="accuracy">
-            <h2 style="color: black">100%</h2>
+          <div class="accuracy-wrapper">
+            <div id="accuracy" class="accuracy">
+              <h2 style="color: black">100%</h2>
+            </div>
           </div>
           <div class="conslusion" style="font-weight: bold">
             <p>WOW! you're so sigma!</p>
@@ -246,6 +248,23 @@
 
         // Toggle status expanded
         isExpanded = !isExpanded;
+      });
+
+      // Ambil elemen tombol "check" dan elemen "accuracy"
+      const checkBtn = document.getElementById("check");
+      const accuracy = document.getElementById("accuracy");
+      const reloadBtn = document.getElementById("reload");
+      // Event listener untuk tombol "check"
+      checkBtn.addEventListener("click", function () {
+        // Tambah kelas 'visible' untuk menampilkan elemen dengan animasi
+        accuracy.textContent =
+          Math.floor(calculateScore(nowWave, nowAns) * 100) / 100 + "%";
+        accuracy.classList.add("visible");
+      });
+
+      reloadBtn.addEventListener("click", function () {
+        // Tambah kelas 'visible' untuk menampilkan elemen dengan animasi
+        accuracy.classList.remove("visible");
       });
     </script>
   </body>

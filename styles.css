@@ -152,7 +152,7 @@ h2 {
   border: 1px solid #1c1c1c; /* Garis batas untuk melihat segmen */
   display: flex;
   flex-direction: column; /* Mengatur isi segmen secara vertikal */
-  align-items: center; /* Menengahkan isi secara horizontal */
+  align-items: center;
 }
 
 .segment button {
@@ -197,23 +197,34 @@ h2 {
 #volume-slider {
   width: 300px;
 }
+
 .segment2 label {
   margin-top: 30px;
 }
 
-.accuracy {
-  height: 30px;
-  width: 80%;
-  max-width: 300px;
-  background: linear-gradient(
-    to right,
-    #00ff00,
-    #ffff00,
-    #ff0000
-  ); /* Gradasi hijau ke kuning ke merah */
+.accuracy-wrapper {
+  display: flex;
+  align-items: flex-start; /* Pastikan hanya elemen ini yang tidak berpusat */
+  width: 100%; /* Buat selebar mungkin */
+  margin-left: 20%;
+}
 
-  justify-content: center;
+.accuracy {
+  width: 0;
+  transition: width 2s ease-in-out, opacity 0.5s ease-in-out;
+  opacity: 0;
+  overflow: hidden;
   align-content: center;
+  background: linear-gradient(to right, #00ff00, #ffff00, #ff0000);
+  height: 30px;
+  max-width: 300px;
+}
+
+.accuracy.visible {
+  width: 80%; /* Lebar final setelah animasi */
+  opacity: 1; /* Terlihat sepenuhnya */
+  color: black;
+  font-weight: bold;
 }
 
 .config-container {
