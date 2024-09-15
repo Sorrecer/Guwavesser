@@ -112,9 +112,7 @@
           <!-- slider -->
           <!-- volume slider -->
           <div class="volume-control">
-            <label
-              for="volume"
-              style="font-weight: bold; margin-bottom: 10px"
+            <label for="volume" style="font-weight: bold; margin-bottom: 10px"
               >Volume:</label
             >
             <input
@@ -125,6 +123,21 @@
               step="0.01"
               value="0.5"
             />
+            <span id="volumeValue">50%</span>
+          </div>
+          <div class="duration-control">
+            <label for="duration" style="font-weight: bold; margin-bottom: 10px"
+              >Duration:</label
+            >
+            <input
+              type="range"
+              id="duration"
+              min="0.5"
+              max="5"
+              step="0.5"
+              value="2"
+            />
+            <span id="durationValue">2</span>
           </div>
         </div>
         <div class="segment segment2">
@@ -179,7 +192,9 @@
               <!-- Easing Dropdown -->
               <label for="easing">Easing:</label>
               <select id="easing">
-                <option value="cubic" selected>Cubic Interpolation (easier)</option>
+                <option value="cubic" selected>
+                  Cubic Interpolation (easier)
+                </option>
                 <option value="ease">Ease In/Out/Inout (harder)</option>
               </select>
             </div>

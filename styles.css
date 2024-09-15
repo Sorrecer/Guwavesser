@@ -199,7 +199,8 @@ h2 {
   transform: scale(0.98); /* Memperkecil sedikit saat diklik */
 }
 
-.volume-control {
+.volume-control,
+.duration-control {
   display: flex;
   flex-direction: column;
   align-items: center;
