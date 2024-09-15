@@ -41,7 +41,7 @@ h2 {
   background-color: #444444; /* Warna latar belakang canvas */
   border: 1px solid #ffffff; /* Garis batas untuk canvas */
   /* margin-bottom: 20px; Jarak antara canvas dan komponen berikutnya */
-  overflow: auto; /* Memungkinkan scroll pada kontainer */
+  overflow: auto;
 }
 
 .scroll-container {
@@ -118,12 +118,17 @@ h2 {
   position: relative;
   margin-right: 0;
   padding: 5px 10px;
-  background-color: #4caf50; /* Warna hijau */
+  background-color: #c5c5c5; /* Warna hijau */
   color: white;
   border: none;
   cursor: pointer;
   /* border-radius: 5px; */
   z-index: 2; /* Pastikan tombol di atas elemen lain */
+}
+
+.expand-btn img {
+  width: 20px; /* Ukuran gambar */
+  height: 20px;
 }
 
 .expand-btn:hover {
