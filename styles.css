@@ -2,8 +2,8 @@ body {
   margin: 0;
   padding: 20px;
   font-family: Arial, sans-serif;
-  background-color: #2c2c2c; /* Warna abu-abu gelap */
-  color: #ffffff; /* Warna teks putih */
+  background-color: #2c2c2c;
+  color: #ffffff;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -11,11 +11,11 @@ body {
 }
 
 .header {
-  margin-bottom: 20px; /* Jarak antara judul dan konten berikutnya */
+  margin-bottom: 20px;
 }
 
 .footer {
-  color: #ffffff; /* Warna teks footer */
+  color: #ffffff;
   padding: 10px;
   width: 100%;
   text-align: center;
@@ -30,17 +30,16 @@ h1 {
 h2 {
   font-size: 1em;
   margin: 0;
-  color: #a0a0a0; /* Warna teks abu-abu lebih terang untuk subjudul */
+  color: #a0a0a0;
 }
 
 .wave-box {
-  width: 90vw; /* Panjang hampir satu layar */
+  width: 90vw;
   max-width: 1100px;
   /* height: 30vw; */
   max-height: 400px;
   background-color: #444444; /* Warna latar belakang canvas */
   border: 1px solid #ffffff; /* Garis batas untuk canvas */
-  /* margin-bottom: 20px; Jarak antara canvas dan komponen berikutnya */
   overflow: auto;
 }
 
@@ -63,7 +62,7 @@ h2 {
   background-color: rgb(255, 0, 0);
   position: absolute; /* Posisi absolut dalam scroll-container */
   left: 60px; /* Mulai dari kanan notes-box (notes-box memiliki lebar 60px) */
-  z-index: 1; /* Pastikan garis berada di atas canvas */
+  z-index: 1;
 }
 
 @keyframes moveLine {
@@ -77,7 +76,7 @@ h2 {
 
 #drawingCanvas {
   width: 1000px; /* Lebar canvas lebih besar dari container */
-  background-color: #2c2c2c; /* Warna latar belakang canvas */
+  background-color: #2c2c2c;
   cursor: crosshair; /* Memberi kursor khusus saat menggambar */
   background-image: linear-gradient(to bottom, #5c5c5c 1px, transparent 1px);
   background-size: 100% 20px; /* Jarak antar garis adalah 20px */
@@ -87,7 +86,7 @@ h2 {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: 60px; /* Fixed width for the notes */
+  width: 60px;
   background-color: #333333;
   flex-shrink: 0; /* Prevent shrinking */
 }
@@ -113,17 +112,14 @@ h2 {
   background-color: rgb(226, 226, 226);
 }
 
-/* CSS untuk Tombol Expand */
 .expand-btn {
   position: relative;
   margin-right: 0;
   padding: 5px 10px;
-  background-color: #c5c5c5; /* Warna hijau */
+  background-color: #c5c5c5;
   color: white;
   border: none;
   cursor: pointer;
-  /* border-radius: 5px; */
-  z-index: 2; /* Pastikan tombol di atas elemen lain */
 }
 
 .expand-btn img {
@@ -133,13 +129,6 @@ h2 {
 
 .expand-btn:hover {
   background-color: #45a049;
-}
-
-/* CSS untuk mode expanded */
-.expanded-canvas {
-  max-width: 1100px;
-  height: 648;
-  overflow: hidden; /* Menghilangkan scroll */
 }
 
 .rectangle-container {
@@ -164,25 +153,19 @@ h2 {
   display: flex;
   flex-direction: column; /* Mengatur isi segmen secara vertikal */
   align-items: center; /* Menengahkan isi secara horizontal */
-  /* margin-top: 40px; */
-  /* justify-content: space-around; */
 }
 
 .segment button {
   margin-top: 30px;
   font-weight: bold;
-  background: linear-gradient(
-    135deg,
-    #a0a0a0,
-    #808080
-  ); /* Gradasi warna abu-abu */
+  background: linear-gradient(135deg, #a0a0a0, #808080);
   border: none; /* Menghapus border default */
-  border-radius: 12px; /* Radius sudut yang lebih halus */
-  height: 40px; /* Tinggi tombol yang lebih besar */
-  width: 120px; /* Lebar tombol yang lebih besar */
-  color: #ffffff; /* Warna teks putih */
-  font-size: 16px; /* Ukuran font yang lebih besar */
-  cursor: pointer; /* Menambahkan pointer saat hover */
+  border-radius: 12px;
+  height: 40px;
+  width: 120px;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
   transition: background 0.3s, transform 0.2s; /* Efek transisi halus */
 }
 
@@ -208,12 +191,11 @@ h2 {
 .duration-control {
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   margin-top: 30px;
 }
 
 #volume-slider {
-  width: 300px; /* Lebar slider */
+  width: 300px;
 }
 .segment2 label {
   margin-top: 30px;
@@ -221,15 +203,15 @@ h2 {
 
 .accuracy {
   height: 30px;
-  width: 80%; /* Menyesuaikan lebar kotak agar dapat dilihat dengan jelas */
-  max-width: 300px; /* Menyesuaikan lebar maksimal kotak accuracy */
+  width: 80%;
+  max-width: 300px;
   background: linear-gradient(
     to right,
     #00ff00,
     #ffff00,
     #ff0000
   ); /* Gradasi hijau ke kuning ke merah */
-  border-radius: 5px; /* Menambahkan sudut membulat pada kotak */
+
   justify-content: center;
   align-content: center;
 }
