@@ -36,8 +36,8 @@ h2 {
 .wave-box {
   width: 90vw; /* Panjang hampir satu layar */
   max-width: 1100px;
-  height: 30vw;
-  max-height: 350px;
+  /* height: 30vw; */
+  max-height: 400px;
   background-color: #444444; /* Warna latar belakang canvas */
   border: 1px solid #ffffff; /* Garis batas untuk canvas */
   /* margin-bottom: 20px; Jarak antara canvas dan komponen berikutnya */

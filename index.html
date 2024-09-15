@@ -14,7 +14,7 @@
     </div>
 
     <!-- wave box -->
-    <div class="wave-box">
+    <div id="wave-box" class="wave-box">
       <div class="scroll-container">
         <!-- Tangga nada box -->
         <div class="notes-box">
@@ -217,5 +217,29 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+      // Ambil elemen tombol expand dan wave-box
+      const expandBtn = document.getElementById("expandBtn");
+      const waveBox = document.getElementById("wave-box");
+
+      // Flag untuk mengetahui apakah waveBox sudah di-expand atau belum
+      let isExpanded = false;
+
+      // Tambahkan event listener pada tombol expand
+      expandBtn.addEventListener("click", function () {
+        if (isExpanded) {
+          // Jika sudah expand, kembalikan ke ukuran awal
+          waveBox.style.maxHeight = "400px";
+          expandBtn.innerHTML = '<img src="down.png" alt="Expand" />'; // Ubah icon menjadi panah ke bawah
+        } else {
+          // Jika belum expand, ubah menjadi fit-content
+          waveBox.style.maxHeight = "fit-content";
+          expandBtn.innerHTML = '<img src="up.svg" alt="Collapse" />'; // Ubah icon menjadi panah ke atas
+        }
+
+        // Toggle status expanded
+        isExpanded = !isExpanded;
+      });
+    </script>
   </body>
 </html>
