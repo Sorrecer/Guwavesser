@@ -147,18 +147,23 @@
         </div>
         <div class="segment segment2">
           <button id="check">Check it!</button>
-          <label for="accuracy" style="font-weight: bold; margin-bottom: 10px"
-            >Accuracy:</label
-          >
+          <label for="accuracy" style="font-weight: bold; margin-bottom: 10px">
+            Accuracy:
+          </label>
           <div class="accuracy-wrapper">
             <div id="accuracy" class="accuracy">
               <h2 style="color: black">100%</h2>
             </div>
           </div>
-          <div class="conslusion" style="font-weight: bold">
+          <div
+            id="conclusion"
+            class="conclusion"
+            style="font-weight: bold; display: none"
+          >
             <p>WOW! you're so sigma!</p>
           </div>
         </div>
+
         <div class="segment segment3">
           <button id="reload">New Sound</button>
           <div class="config-container">
@@ -254,17 +259,57 @@
       const checkBtn = document.getElementById("check");
       const accuracy = document.getElementById("accuracy");
       const reloadBtn = document.getElementById("reload");
+
       // Event listener untuk tombol "check"
       checkBtn.addEventListener("click", function () {
-        // Tambah kelas 'visible' untuk menampilkan elemen dengan animasi
+        // Hitung akurasi
+        const score = Math.floor(calculateScore(nowWave, nowAns) * 100) / 100;
         accuracy.textContent =
           Math.floor(calculateScore(nowWave, nowAns) * 100) / 100 + "%";
+
+        // Sesuaikan lebar sesuai akurasi (proposional dari 80%)
+        const widthPercentage = (score / 100) * 80; // 80% adalah lebar max dari box
+        accuracy.style.width = widthPercentage + "%";
+
+        // Ubah background gradient agar sesuai dengan score
+        const gradientPercentage = score / 100; // Adjust color gradient based on score
+        accuracy.style.background = `linear-gradient(to right, #00ff00, #ffff00 ${gradientPercentage}%, #ff0000)`;
+
+        // Tampilkan elemen accuracy dengan animasi
         accuracy.classList.add("visible");
+
+        // Ubah teks kesimpulan berdasarkan nilai akurasi
+        let conclusionText = "";
+        if (score < 40) {
+          conclusionText = "Are you even trying";
+        } else if (score >= 40 && score <= 60) {
+          conclusionText = "Not bad for beginners";
+        } else if (score > 60 && score <= 70) {
+          conclusionText =
+            "Not bad, could have been better if you paid more attention";
+        } else if (score > 70 && score <= 80) {
+          conclusionText = "I'm proud of you";
+        } else if (score > 80 && score <= 90) {
+          conclusionText = "Brilliant.";
+        } else if (score > 90 && score < 100) {
+          conclusionText = "Maybe try harder config";
+        } else if (score === 100) {
+          conclusionText = "Nice hack";
+        }
+
+        // Update kesimpulan dan tampilkan
+        conclusion.querySelector("p").textContent = conclusionText;
+        conclusion.style.display = "block"; // Tampilkan kesimpulan
       });
 
       reloadBtn.addEventListener("click", function () {
-        // Tambah kelas 'visible' untuk menampilkan elemen dengan animasi
+        // Hilangkan animasi dan reset akurasi
         accuracy.classList.remove("visible");
+        accuracy.style.width = "0"; // Reset lebar ke 0%
+        accuracy.style.background = ""; // Reset gradient background
+
+        // Sembunyikan kesimpulan
+        conclusion.style.display = "none"; // Sembunyikan kesimpulan lagi
       });
     </script>
   </body>
