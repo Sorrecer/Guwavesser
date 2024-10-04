@@ -278,7 +278,7 @@ h2 {
 .card p {
   display: none; /* Hide paragraph initially */
   font-size: 1em;
-  color: #c5c5c5;
+  color: #e4e4e4;
 }
 
 .card.expanded {
