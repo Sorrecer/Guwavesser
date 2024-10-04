@@ -162,6 +162,7 @@
           >
             <p>WOW! you're so sigma!</p>
           </div>
+          <!-- tulis statisticnya disini------------------- -->
         </div>
 
         <div class="segment segment3">
@@ -226,8 +227,28 @@
       </div>
     </div>
 
+    <div class="card-container">
+      <div class="card">
+        <h3>What is this all about?</h3>
+        <p>lorem ipsum</p>
+      </div>
+      <div class="card">
+        <h3>How can I even know the pitch??</h3>
+        <p>lorem ipsum</p>
+      </div>
+      <div class="card">
+        <h3>Credits:</h3>
+        <p>Frontend : <a href="https://portfolio-web-kenny.vercel.app/" target="_blank">Kenny</a></p>
+        <p>Backend : <a href="https://www.linkedin.com/in/vandicco/" target="_blank">Vandicco</a>
+      </div>
+      <div class="card">
+        <h3>Are you having fun? no? Okay.. 😐</h3>
+        <p>if you are please share this to your friends 👍</p>
+      </div>
+    </div>
+
     <div class="footer">
-      <h2>Ambil nasinya satu Pak Vincent</h2>
+      <h2>@2024</h2>
     </div>
 
     <script src="script.js"></script>
@@ -289,11 +310,11 @@
             "Not bad, could have been better if you paid more attention";
         } else if (score > 70 && score <= 80) {
           conclusionText = "I'm proud of you";
-        } else if (score > 80 && score <= 90) {
+        } else if (score > 80 && score <= 95) {
           conclusionText = "Brilliant.";
-        } else if (score > 90 && score < 100) {
+        } else if (score > 95 && score < 100) {
           conclusionText = "Maybe try harder config";
-        } else if (score === 100) {
+        } else if (score == 100) {
           conclusionText = "Nice hack";
         }
 
@@ -310,6 +331,18 @@
 
         // Sembunyikan kesimpulan
         conclusion.style.display = "none"; // Sembunyikan kesimpulan lagi
+      });
+    </script>
+    <script>
+      // Get all card elements
+      const cards = document.querySelectorAll(".card");
+
+      // Loop through each card and add a click event listener
+      cards.forEach((card) => {
+        card.addEventListener("click", () => {
+          // Toggle the 'expanded' class on click
+          card.classList.toggle("expanded");
+        });
       });
     </script>
   </body>
