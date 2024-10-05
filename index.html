@@ -9,7 +9,18 @@
   <body>
     <!-- judul -->
     <div class="header">
-      <h1>Guwavesser</h1>
+      <div class="title">
+        <h1>Guwavesser</h1>
+        <div class="info-container">
+          <span class="info-icon">i</span>
+          <div class="info-text">
+            <p>How to play:</p>
+            <p>1. Click "play sound" button and listen to the tone</p>
+            <p>2. Guess and draw the wave in the canvas</p>
+            <p>3. Click "check it" to see your accuracy</p>
+          </div>
+        </div>
+      </div>
       <h2>Wave Guessing Game</h2>
     </div>
 
@@ -170,8 +181,15 @@
           <div class="config-container">
             <div class="config-item slider">
               <label for="resolution" style="margin-top: 30px"
-                >Resolution:</label
+                >Resolution:
+                <div class="info-container">
+                  <span class="info-icon">i</span>
+                  <div class="info-text">
+                    <p>Sets how smooth your drawing will be</p>
+                  </div>
+                </div></label
               >
+
               <input
                 type="range"
                 id="resolution"
@@ -184,7 +202,15 @@
             </div>
             <div class="config-item slider">
               <!-- Resolution Slider -->
-              <label for="points">Points:</label>
+              <label for="points"
+                >Points:
+                <div class="info-container">
+                  <span class="info-icon">i</span>
+                  <div class="info-text">
+                    <p>Amount of tone point in the sound</p>
+                  </div>
+                </div></label
+              >
               <input
                 type="range"
                 id="points"
@@ -197,7 +223,15 @@
             </div>
             <div class="config-item dropdown">
               <!-- Pitch Difficulty Dropdown -->
-              <label for="pitch">Pitch Difficulty:</label>
+              <label for="pitch"
+                >Pitch Difficulty:
+                <div class="info-container">
+                  <span class="info-icon">i</span>
+                  <div class="info-text">
+                    <p>Affect the tone's range</p>
+                  </div>
+                </div></label
+              >
               <select id="pitch">
                 <option value="0.333">Easy</option>
                 <option value="0.667">Medium</option>
@@ -206,7 +240,15 @@
             </div>
             <div class="config-item dropdown">
               <!-- Easing Dropdown -->
-              <label for="easing">Easing:</label>
+              <label for="easing"
+                >Easing:
+                <div class="info-container">
+                  <span class="info-icon">i</span>
+                  <div class="info-text">
+                    <p>idk bout this, ask vandicco</p>
+                  </div>
+                </div></label
+              >
               <select id="easing">
                 <option value="cubic" selected>
                   Cubic Interpolation (easier)
@@ -216,7 +258,15 @@
             </div>
             <div class="config-item dropdown">
               <!-- Line Helper Dropdown -->
-              <label for="line">Line Helper:</label>
+              <label for="line"
+                >Line Helper:
+                <div class="info-container">
+                  <span class="info-icon">i</span>
+                  <div class="info-text">
+                    <p>coming soon</p>
+                  </div>
+                </div></label
+              >
               <select id="line">
                 <option value="on">On</option>
                 <option value="off" selected>Off</option>
@@ -260,14 +310,14 @@
         </p>
 
         <p>
-          Our own method to achieve this is simple: focus on one song you know that
-          starts with the key of C. Why C? By establishing C as your reference
-          note—think of it as "do"—you can compare other notes to it. For
-          instance, when you hear another note, such as "mi," you'll eventually
-          recognize it as the key E, because E is the third note in the C major
-          scale. As you practice more, you'll develop a mental map of how
-          different pitches relate to C, making it easier to identify them in
-          various songs and melodies.
+          Our own method to achieve this is simple: focus on one song you know
+          that starts with the key of C. Why C? By establishing C as your
+          reference note—think of it as "do"—you can compare other notes to it.
+          For instance, when you hear another note, such as "mi," you'll
+          eventually recognize it as the key E, because E is the third note in
+          the C major scale. As you practice more, you'll develop a mental map
+          of how different pitches relate to C, making it easier to identify
+          them in various songs and melodies.
         </p>
       </div>
       <div class="card">

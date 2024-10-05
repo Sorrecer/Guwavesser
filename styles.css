@@ -14,6 +14,64 @@ body {
   margin-bottom: 20px;
 }
 
+/* Container flex untuk elemen "i" dan teks */
+.info-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Style ikon "i" */
+.info-icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+  border: 1px solid #cccccc;
+  border-radius: 50%; /* Membuat border menjadi lingkaran */
+  width: 12px; /* Pastikan lebar dan tinggi sama */
+  height: 12px;
+  color: #cccccc;
+  cursor: pointer;
+}
+/* Style untuk teks informasi yang tersembunyi */
+.info-text {
+  visibility: hidden;
+  width: 200px;
+  background-color: #f9f9f9;
+  color: #000;
+  text-align: center;
+  border-radius: 5px;
+  padding: 10px;
+  position: absolute;
+  z-index: 1;
+  top: 125%; /* Pindahkan ke bawah simbol "i" */
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Panah di atas teks */
+.info-text::after {
+  content: "";
+  position: absolute;
+  bottom: 100%; /* Panah akan muncul di atas teks */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #f9f9f9 transparent;
+}
+
+/* Menampilkan teks saat container di-hover */
+.info-container:hover .info-text {
+  visibility: visible;
+}
+
+.title {
+  display: flex;
+}
+
 .footer {
   color: #ffffff;
   padding: 10px;
@@ -252,7 +310,7 @@ h2 {
   width: 100%;
   margin-top: 40px;
   padding: 20px;
-  
+
   flex-direction: column; /* Stack the cards vertically */
   align-items: center; /* Ensure each card stretches to 100% width */
 }
@@ -271,7 +329,7 @@ h2 {
   transition: padding 0.3s ease; /* Smooth transition for padding */
 }
 
-.card:hover{
+.card:hover {
   background-color: #808080;
 }
 
@@ -285,20 +343,18 @@ h2 {
   padding: 20px; /* Full padding when expanded */
 }
 
-.card.expanded:hover{
+.card.expanded:hover {
   background-color: #383838;
 }
 
 .card.expanded p {
   display: block; /* Show paragraph when expanded */
 }
-JavaScr
-
-.card h3 {
+JavaScr .card h3 {
   margin: 10px 0; /* Space above and below the heading */
   font-size: 1em; /* Size of the title */
 }
 
-.card a{
-  color: white; 
+.card a {
+  color: white;
 }
