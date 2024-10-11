@@ -139,16 +139,13 @@ function easeFunc(x, type, stiff)
     }
 }
 
-/* 
 function generateWaveEasing(n)
 {
     const y = Array.from({ length: n }, () => Math.random());
     let x = Array.from({ length: n - 2 }, () => Math.random());
     x = [0, ...x.sort(), 1];
     const easeType = Array.from({ length: n-1 }, () => Math.floor(Math.random() * 3));
-    const easeStiff = Array.from({ length: n-1 }, () => Math.random()*0.75+0.125);
-    console.log(easeType);
-    console.log(easeStiff);
+    const easeStiff = Array.from({ length: n-1 }, () => Math.random()*0.9+0.05);
     
     const yInterp = [];
 
@@ -156,13 +153,12 @@ function generateWaveEasing(n)
         const xInterp = i / (resolution - 1);
         for (let j = 0; j < n-1; j++){
             if (x[j] <= xInterp && xInterp <= x[j + 1]) {
-                yInterp.push((easeFunc(xInterp, easeType[j], easeStiff[j]) - 0.5)*(y[j+1]-y[j])+(y[j+1]+y[j])/2);
+                yInterp.push(easeFunc((xInterp-x[j])/(x[j+1]-x[j]), easeType[j], easeStiff[j])*(y[j+1]-y[j]) + y[j]);
             }
         }
     }
     return yInterp;
 }
-*/
 
 function generateSound(wave, duration, volume) // make sure volume is below 0.5
 {
@@ -310,6 +306,9 @@ function reload()
             break;
         case "linear":
             nowAns = generateWaveLinear(points);
+            break;
+        case "ease":
+            nowAns = generateWaveEasing(points);
             break;
     }
     //nowAns = nowAns.fill(0.5);
