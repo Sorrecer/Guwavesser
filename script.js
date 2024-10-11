@@ -81,6 +81,34 @@ function generateWave(n)
     return yInterp
 } 
 
+function generateWaveLinear(n) {
+    // Generate random y values between 0 and 1
+    const y = Array.from({ length: n }, () => Math.random());
+
+    // Generate random x values between 0 and 1, sorted, with first x = 0 and last x = 1
+    let x = Array.from({ length: n - 2 }, () => Math.random());
+    x = [0, ...x.sort(), 1];  // Ensure first is 0 and last is 1
+
+    const yInterp = [];
+    for (let i = 0; i < resolution; i++) {
+        // Calculate the corresponding position on the x-axis (from 0 to 1)
+        const xInterp = i / (resolution - 1);
+
+        // Find the two surrounding points in the original data
+        for (let j = 0; j < n - 1; j++) {
+            if (x[j] <= xInterp && xInterp <= x[j + 1]) {
+
+                // Normalize t to the range [0, 1] between the two x points
+                const t = (xInterp-x[j])/(x[j+1]-x[j]) * (y[j+1]-y[j]) + y[j];
+
+                yInterp.push(t*pitch+(1-pitch)/2);
+                break;
+            }
+        }
+    }
+    return yInterp;
+}
+
 function easeGen(size, type, stiff)
 {
     let val = Array.from({ length: size }, (v, i) => i / (size - 1));
@@ -108,6 +136,7 @@ function easeFunc(x, type, stiff)
     }
 }
 
+/* 
 function generateWaveEasing(n)
 {
     const y = Array.from({ length: n }, () => Math.random());
@@ -130,6 +159,7 @@ function generateWaveEasing(n)
     }
     return yInterp;
 }
+*/
 
 function generateSound(wave, duration, volume) // make sure volume is below 0.5
 {
@@ -271,7 +301,14 @@ function resizeCanvas()
 
 function reload()
 {
-    nowAns = generateWave(points);
+    switch(optionEasing.value){
+        case "cubic":
+            nowAns = generateWave(points);
+            break;
+        case "linear":
+            nowAns = generateWaveLinear(points);
+            break;
+    }
     //nowAns = nowAns.fill(0.5);
     nowWave = new Array(resolution).fill(0)
     ctx.clearRect(0, 0, cw, ch);
