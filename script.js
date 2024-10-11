@@ -1,5 +1,7 @@
 const canvas = document.getElementById('drawingCanvas');
 
+const boxConfig = document.getElementById("config");
+
 const buttonPlay = document.getElementById('play');
 const buttonCheck = document.getElementById('check');
 const buttonReload = document.getElementById('reload');
@@ -19,6 +21,7 @@ const displayVolume = document.getElementById("volumeValue");
 const displayDuration = document.getElementById("durationValue");
 const statistics = document.getElementById("statistics");
 const accuracy = document.getElementById("accuracy");
+const configAlert = document.getElementById("configAlert");
 
 const ctx = canvas.getContext('2d');
 let cw = canvas.clientWidth;
@@ -320,6 +323,7 @@ function reload()
 
     // Sembunyikan kesimpulan
     conclusion.style.display = "none"; // Sembunyikan kesimpulan lagi
+    configAlert.hidden = true;
 }
 
 function check()
@@ -382,6 +386,11 @@ expandBtn.addEventListener("click", function () {
     // Toggle status expanded
     isExpanded = !isExpanded;
   });
+
+boxConfig.onchange = ()=>{
+    configAlert.hidden = false;
+};
+
 buttonCheck.onclick = check;
 buttonPlay.onclick = ()=>{
     generateSound(nowAns, duration, volume); 
@@ -404,7 +413,6 @@ sliderPoints.oninput = ()=>{
     displayPoints.textContent = points;
 };
 optionPitch.onchange = ()=>{pitch = Number(optionPitch.value)};
-optionEasing.onchange = ()=>{};
 optionLine.onchange = ()=>{};
 sliderVolume.oninput = ()=>{
     volume = sliderVolume.value;
