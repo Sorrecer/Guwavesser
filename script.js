@@ -10,11 +10,15 @@ const optionEasing = document.getElementById('easing');
 const optionLine = document.getElementById('line');
 const sliderVolume = document.getElementById('volume');
 const sliderDuration = document.getElementById('duration');
+const expandBtn = document.getElementById("expandBtn");
+const waveBox = document.getElementById("wave-box");
 
 const displayResolution = document.getElementById("resolutionValue");
 const displayPoints = document.getElementById("pointsValue");
 const displayVolume = document.getElementById("volumeValue");
 const displayDuration = document.getElementById("durationValue");
+const statistics = document.getElementById("statistics");
+const accuracy = document.getElementById("accuracy");
 
 const ctx = canvas.getContext('2d');
 let cw = canvas.clientWidth;
@@ -30,8 +34,8 @@ let nowAns = new Array(resolution).fill(0)
 let isDrawing = false;
 let xb = -1
 let yb = -1
-
-
+let currenthi = 0;
+let isExpanded = false;
 
 function generateWave(n)
 { 
@@ -76,6 +80,56 @@ function generateWave(n)
 
     return yInterp
 } 
+
+function easeGen(size, type, stiff)
+{
+    let val = Array.from({ length: size }, (v, i) => i / (size - 1));
+    const pow = stiff/(1-stiff);
+    switch (type) {
+        case 0: //ease in
+            return val.map((x)=>(Math.pow(x, pow)));
+        case 1: //ease out
+            return val.map((x)=>(1-Math.pow(1-x, pow)));
+        case 2: //ease io
+            return val.map((x)=>(x<0.5? Math.pow(2,pow-1)*Math.pow(x,pow) : 1-(Math.pow(-2*x+2,pow)/2)))
+    }
+}
+
+function easeFunc(x, type, stiff)
+{
+    const pow = stiff/(1-stiff);
+    switch (type) {
+        case 0: //ease in
+            return Math.pow(x, pow);
+        case 1: //ease out
+            return 1-Math.pow(1-x, pow);
+        case 2: //ease io
+            return x<0.5? Math.pow(2,pow-1)*Math.pow(x,pow) : 1-(Math.pow(-2*x+2,pow)/2);
+    }
+}
+
+function generateWaveEasing(n)
+{
+    const y = Array.from({ length: n }, () => Math.random());
+    let x = Array.from({ length: n - 2 }, () => Math.random());
+    x = [0, ...x.sort(), 1];
+    const easeType = Array.from({ length: n-1 }, () => Math.floor(Math.random() * 3));
+    const easeStiff = Array.from({ length: n-1 }, () => Math.random()*0.75+0.125);
+    console.log(easeType);
+    console.log(easeStiff);
+    
+    const yInterp = [];
+
+    for(let i = 0; i < resolution; i++){
+        const xInterp = i / (resolution - 1);
+        for (let j = 0; j < n-1; j++){
+            if (x[j] <= xInterp && xInterp <= x[j + 1]) {
+                yInterp.push((easeFunc(xInterp, easeType[j], easeStiff[j]) - 0.5)*(y[j+1]-y[j])+(y[j+1]+y[j])/2);
+            }
+        }
+    }
+    return yInterp;
+}
 
 function generateSound(wave, duration, volume) // make sure volume is below 0.5
 {
@@ -194,20 +248,17 @@ function mouseStop(e)
 function calculateScore(wav, ans)
 {
     let diff = 0;
-    let der = 0;
     for(let i = 0; i < resolution; i++){
         diff += Math.abs(wav[i] - ans[i]);
     }
-    for(let i = 0; i < resolution-1; i++){
-        der += Math.abs((wav[i+1] - wav[i]) - (ans[i+1] - ans[i]));
-    }
     diff /= resolution;
-    der /= resolution-1;
 
-    let scdiff = Math.exp(Math.log(0.95)*1296*diff*diff);
-    let scder = 1-12*der;
-    scder = scder > 0? scder:0;
-    return 60*scdiff+40*scder;
+    let scdiff = Math.exp(Math.log(0.965)*1296*diff*diff);
+    
+    statistics.innerHTML = `distance error: ${diff*36} semitone(s)<br>distance score: ${scdiff*100}%<br>best: ${currenthi*100}%` + (currenthi<scdiff?"<br>NEW BEST!":"");
+    
+    currenthi = currenthi<scdiff?scdiff:currenthi;
+    return scdiff*100;
 }
 
 function resizeCanvas()
@@ -225,13 +276,54 @@ function reload()
     nowWave = new Array(resolution).fill(0)
     ctx.clearRect(0, 0, cw, ch);
     isDraw = true;
+    // Hilangkan animasi dan reset akurasi
+    accuracy.classList.remove("visible");
+    accuracy.style.width = "0"; // Reset lebar ke 0%
+    accuracy.style.background = ""; // Reset gradient background
+
+    // Sembunyikan kesimpulan
+    conclusion.style.display = "none"; // Sembunyikan kesimpulan lagi
 }
 
 function check()
 {
-    drawWave(nowAns, '#808080');
-    console.log(calculateScore(nowWave, nowAns));
+    drawWave(nowAns, '#00ff00');
+    score = calculateScore(nowWave, nowAns);
     isDraw = false;
+    const widthPercentage = (score / 100) * 80; // 80% adalah lebar max dari box
+    accuracy.style.width = widthPercentage + "%";
+
+    accuracy.textContent = Math.floor(score * 100) / 100 + "%";
+
+    // Ubah background gradient agar sesuai dengan score
+    const gradientPercentage = score / 100; // Adjust color gradient based on score
+    accuracy.style.background = `linear-gradient(to right, #00ff00, #ffff00 ${gradientPercentage}%, #ff0000)`;
+
+    // Tampilkan elemen accuracy dengan animasi
+    accuracy.classList.add("visible");
+
+    // Ubah teks kesimpulan berdasarkan nilai akurasi
+    let conclusionText = "";
+    if (score < 40) {
+      conclusionText = "Are you even trying";
+    } else if (score >= 40 && score <= 60) {
+      conclusionText = "Not bad for beginners";
+    } else if (score > 60 && score <= 70) {
+      conclusionText =
+        "Not bad, could have been better if you paid more attention";
+    } else if (score > 70 && score <= 80) {
+      conclusionText = "I'm proud of you";
+    } else if (score > 80 && score <= 95) {
+      conclusionText = "Brilliant.";
+    } else if (score > 95 && score < 100) {
+      conclusionText = "Maybe try harder config";
+    } else if (score == 100) {
+      conclusionText = "Nice hack";
+    }
+
+    // Update kesimpulan dan tampilkan
+    conclusion.querySelector("p").textContent = conclusionText;
+    conclusion.style.display = "block"; // Tampilkan kesimpulan
 }
 
 // Event Listeners
@@ -239,6 +331,20 @@ canvas.addEventListener('mousedown', mouseDraw);
 canvas.addEventListener('mousemove', mouseMove);
 canvas.addEventListener('mouseup', mouseStop);
 canvas.addEventListener('mouseleave', mouseStop);
+expandBtn.addEventListener("click", function () {
+    if (isExpanded) {
+      // Jika sudah expand, kembalikan ke ukuran awal
+      waveBox.style.maxHeight = "400px";
+      expandBtn.innerHTML = '<img src="down.png" alt="Expand" />'; // Ubah icon menjadi panah ke bawah
+    } else {
+      // Jika belum expand, ubah menjadi fit-content
+      waveBox.style.maxHeight = "fit-content";
+      expandBtn.innerHTML = '<img src="up.svg" alt="Collapse" />'; // Ubah icon menjadi panah ke atas
+    }
+
+    // Toggle status expanded
+    isExpanded = !isExpanded;
+  });
 buttonCheck.onclick = check;
 buttonPlay.onclick = ()=>{
     generateSound(nowAns, duration, volume); 
@@ -275,3 +381,15 @@ sliderDuration.oninput = ()=>{
 // Initial
 resizeCanvas();
 reload();
+
+
+// Get all card elements
+const cards = document.querySelectorAll(".card");
+
+// Loop through each card and add a click event listener
+cards.forEach((card) => {
+card.addEventListener("click", () => {
+    // Toggle the 'expanded' class on click
+    card.classList.toggle("expanded");
+});
+});

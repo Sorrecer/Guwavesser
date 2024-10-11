@@ -173,7 +173,9 @@
           >
             <p>WOW! you're so sigma!</p>
           </div>
-          <!-- tulis statisticnya disini------------------- -->
+          <div id="statistics" style="text-align: left;">
+            <!-- tulis statisticnya disini------------------- -->
+          </div>
         </div>
 
         <div class="segment segment3">
@@ -355,98 +357,5 @@
     </div>
 
     <script src="script.js"></script>
-    <script>
-      // Ambil elemen tombol expand dan wave-box
-      const expandBtn = document.getElementById("expandBtn");
-      const waveBox = document.getElementById("wave-box");
-
-      // Flag untuk mengetahui apakah waveBox sudah di-expand atau belum
-      let isExpanded = false;
-
-      // Tambahkan event listener pada tombol expand
-      expandBtn.addEventListener("click", function () {
-        if (isExpanded) {
-          // Jika sudah expand, kembalikan ke ukuran awal
-          waveBox.style.maxHeight = "400px";
-          expandBtn.innerHTML = '<img src="down.png" alt="Expand" />'; // Ubah icon menjadi panah ke bawah
-        } else {
-          // Jika belum expand, ubah menjadi fit-content
-          waveBox.style.maxHeight = "fit-content";
-          expandBtn.innerHTML = '<img src="up.svg" alt="Collapse" />'; // Ubah icon menjadi panah ke atas
-        }
-
-        // Toggle status expanded
-        isExpanded = !isExpanded;
-      });
-
-      // Ambil elemen tombol "check" dan elemen "accuracy"
-      const checkBtn = document.getElementById("check");
-      const accuracy = document.getElementById("accuracy");
-      const reloadBtn = document.getElementById("reload");
-
-      // Event listener untuk tombol "check"
-      checkBtn.addEventListener("click", function () {
-        // Hitung akurasi
-        const score = Math.floor(calculateScore(nowWave, nowAns) * 100) / 100;
-        accuracy.textContent =
-          Math.floor(calculateScore(nowWave, nowAns) * 100) / 100 + "%";
-
-        // Sesuaikan lebar sesuai akurasi (proposional dari 80%)
-        const widthPercentage = (score / 100) * 80; // 80% adalah lebar max dari box
-        accuracy.style.width = widthPercentage + "%";
-
-        // Ubah background gradient agar sesuai dengan score
-        const gradientPercentage = score / 100; // Adjust color gradient based on score
-        accuracy.style.background = `linear-gradient(to right, #00ff00, #ffff00 ${gradientPercentage}%, #ff0000)`;
-
-        // Tampilkan elemen accuracy dengan animasi
-        accuracy.classList.add("visible");
-
-        // Ubah teks kesimpulan berdasarkan nilai akurasi
-        let conclusionText = "";
-        if (score < 40) {
-          conclusionText = "Are you even trying";
-        } else if (score >= 40 && score <= 60) {
-          conclusionText = "Not bad for beginners";
-        } else if (score > 60 && score <= 70) {
-          conclusionText =
-            "Not bad, could have been better if you paid more attention";
-        } else if (score > 70 && score <= 80) {
-          conclusionText = "I'm proud of you";
-        } else if (score > 80 && score <= 95) {
-          conclusionText = "Brilliant.";
-        } else if (score > 95 && score < 100) {
-          conclusionText = "Maybe try harder config";
-        } else if (score == 100) {
-          conclusionText = "Nice hack";
-        }
-
-        // Update kesimpulan dan tampilkan
-        conclusion.querySelector("p").textContent = conclusionText;
-        conclusion.style.display = "block"; // Tampilkan kesimpulan
-      });
-
-      reloadBtn.addEventListener("click", function () {
-        // Hilangkan animasi dan reset akurasi
-        accuracy.classList.remove("visible");
-        accuracy.style.width = "0"; // Reset lebar ke 0%
-        accuracy.style.background = ""; // Reset gradient background
-
-        // Sembunyikan kesimpulan
-        conclusion.style.display = "none"; // Sembunyikan kesimpulan lagi
-      });
-    </script>
-    <script>
-      // Get all card elements
-      const cards = document.querySelectorAll(".card");
-
-      // Loop through each card and add a click event listener
-      cards.forEach((card) => {
-        card.addEventListener("click", () => {
-          // Toggle the 'expanded' class on click
-          card.classList.toggle("expanded");
-        });
-      });
-    </script>
   </body>
 </html>
