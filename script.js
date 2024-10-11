@@ -34,11 +34,13 @@ let volume = 0.5
 let duration = 2
 let nowWave = new Array(resolution).fill(0)
 let nowAns = new Array(resolution).fill(0)
+let lines = new Array(points).fill(0)
 let isDrawing = false;
 let xb = -1
 let yb = -1
 let currenthi = 0;
 let isExpanded = false;
+let help = false;
 
 function generateWave(n)
 { 
@@ -48,6 +50,7 @@ function generateWave(n)
     // Generate random x values between 0 and 1, sorted, with first x = 0 and last x = 1
     let x = Array.from({ length: n - 2 }, () => Math.random());
     x = [0, ...x.sort(), 1];  // Ensure first is 0 and last is 1
+    lines = x;
 
     const yInterp = [];
 
@@ -91,6 +94,7 @@ function generateWaveLinear(n) {
     // Generate random x values between 0 and 1, sorted, with first x = 0 and last x = 1
     let x = Array.from({ length: n - 2 }, () => Math.random());
     x = [0, ...x.sort(), 1];  // Ensure first is 0 and last is 1
+    lines = x;
 
     const yInterp = [];
     for (let i = 0; i < resolution; i++) {
@@ -144,6 +148,7 @@ function generateWaveEasing(n)
     const y = Array.from({ length: n }, () => Math.random());
     let x = Array.from({ length: n - 2 }, () => Math.random());
     x = [0, ...x.sort(), 1];
+    lines = x;
     const easeType = Array.from({ length: n-1 }, () => Math.floor(Math.random() * 3));
     const easeStiff = Array.from({ length: n-1 }, () => Math.random()*0.9+0.05);
     
@@ -230,7 +235,20 @@ function drawWave(wave, color = '#ffffff')
         ctx.lineTo((i+1)*wi, (1-wave[i+1])*ch);
     }
     ctx.stroke();
-} 
+}
+
+function drawHelper() {
+    if(!help) return;
+    ctx.strokeStyle = '#404040'; // Color of the line
+    ctx.lineWidth = 2; // Line width
+
+    for(let i = 1; i < lines.length-1; i++){
+        ctx.beginPath();
+        ctx.moveTo(lines[i]*cw, 0);
+        ctx.lineTo(lines[i]*cw, ch);
+        ctx.stroke();
+    }
+}
 
 function mouseDraw(e) {
     if(isDraw) isDrawing = true;
@@ -243,6 +261,7 @@ function mouseMove(e)
     if (!isDrawing) return
     
     ctx.clearRect(0, 0, cw, ch);
+    drawHelper();
 
     x = e.offsetX;
     y = e.offsetY;
@@ -314,6 +333,7 @@ function reload()
     //nowAns = nowAns.fill(0.5);
     nowWave = new Array(resolution).fill(0)
     ctx.clearRect(0, 0, cw, ch);
+    drawHelper();
     isDraw = true;
     // Hilangkan animasi dan reset akurasi
     accuracy.classList.remove("visible");
@@ -412,7 +432,7 @@ sliderPoints.oninput = ()=>{
     displayPoints.textContent = points;
 };
 optionPitch.onchange = ()=>{pitch = Number(optionPitch.value)};
-optionLine.onchange = ()=>{};
+optionLine.onchange = ()=>{help = optionLine.checked};
 sliderVolume.oninput = ()=>{
     volume = sliderVolume.value;
     displayVolume.textContent = Math.round(volume*100)+"%";
@@ -425,7 +445,6 @@ sliderDuration.oninput = ()=>{
 // Initial
 resizeCanvas();
 reload();
-
 
 // Get all card elements
 const cards = document.querySelectorAll(".card");
