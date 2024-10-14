@@ -173,19 +173,25 @@
           >
             <p>WOW! you're so sigma!</p>
           </div>
-          <!-- tulis statisticnya disini------------------- -->
+          <div id="statistics" style="text-align: left"></div>
         </div>
 
         <div class="segment segment3">
           <button id="reload">New Sound</button>
-          <div class="config-container">
+          <div id="configAlert" hidden>
+            Config has been changed, please get new sound.
+          </div>
+          <div class="config-container" id="config">
             <div class="config-item slider">
               <label for="resolution" style="margin-top: 30px"
                 >Resolution:
                 <div class="info-container">
                   <span class="info-icon">?</span>
                   <div class="info-text">
-                    <p>Sets how smooth your drawing will be</p>
+                    <p>
+                      Sets how smooth your drawing will be (could be easier if
+                      too small, don't affect if big)
+                    </p>
                   </div>
                 </div></label
               >
@@ -207,7 +213,10 @@
                 <div class="info-container">
                   <span class="info-icon">?</span>
                   <div class="info-text">
-                    <p>Amount of tone point in the sound</p>
+                    <p>
+                      Amount of tone point in the sound (higher number, harder
+                      difficulty)
+                    </p>
                   </div>
                 </div></label
               >
@@ -251,9 +260,12 @@
               >
               <select id="easing">
                 <option value="cubic" selected>
-                  Cubic Interpolation (easier)
+                  Cubic Interpolation (smooth, easy)
                 </option>
-                <option value="ease">Ease In/Out/Inout (harder)</option>
+                <option value="linear">
+                  Linear Interpolation (sharp, easy)
+                </option>
+                <option value="ease">Ease In/Out/Inout (random, hard)</option>
               </select>
             </div>
             <div class="config-item dropdown">
@@ -263,14 +275,11 @@
                 <div class="info-container">
                   <span class="info-icon">?</span>
                   <div class="info-text">
-                    <p>coming soon</p>
+                    <p>show lines for pitch points (easier)</p>
                   </div>
                 </div></label
               >
-              <select id="line">
-                <option value="on">On</option>
-                <option value="off" selected>Off</option>
-              </select>
+              <input id="line" type="checkbox" />
             </div>
           </div>
         </div>
@@ -286,16 +295,15 @@
           progress through time, creating beautiful melodies and harmonies. Our
           game takes that concept to the next level! Here, you'll interact with
           a dynamic piano roll where different tones and sounds are represented
-          as waveforms. Your challenge is to accurately guess the shape and
-          progression of these sound waves based on auditory clues.
+          as pitch curves. Your challenge is to accurately guess the shape and
+          progression of these pitch curves based on auditory clues.
         </p>
 
         <p>
-          As you play, you’ll develop a keen ear for identifying pitch, rhythm,
-          and tonal nuances. The game tracks your accuracy, allowing you to
-          improve your listening skills with every round. Compete against
-          friends or strive for personal bests and let's see how well you can
-          visualize music.
+          As you play, you’ll develop a keen ear for identifying pitch and tonal
+          nuances. The game tracks your accuracy, allowing you to improve your
+          listening skills with every round. Compete against friends or strive
+          for personal bests and let's see how well you can visualize tone.
         </p>
       </div>
       <div class="card">
@@ -325,6 +333,9 @@
         <p>
           Frontend :
           <a href="https://github.com/Sorrecer/" target="_blank">Kenny</a>
+          <a href="https://portfolio-web-kenny.vercel.app/" target="_blank"
+            >sorrecer</a
+          >
         </p>
         <p>
           Backend :
@@ -353,98 +364,5 @@
     </div>
 
     <script src="script.js"></script>
-    <script>
-      // Ambil elemen tombol expand dan wave-box
-      const expandBtn = document.getElementById("expandBtn");
-      const waveBox = document.getElementById("wave-box");
-
-      // Flag untuk mengetahui apakah waveBox sudah di-expand atau belum
-      let isExpanded = false;
-
-      // Tambahkan event listener pada tombol expand
-      expandBtn.addEventListener("click", function () {
-        if (isExpanded) {
-          // Jika sudah expand, kembalikan ke ukuran awal
-          waveBox.style.maxHeight = "400px";
-          expandBtn.innerHTML = '<img src="down.png" alt="Expand" />'; // Ubah icon menjadi panah ke bawah
-        } else {
-          // Jika belum expand, ubah menjadi fit-content
-          waveBox.style.maxHeight = "fit-content";
-          expandBtn.innerHTML = '<img src="up.svg" alt="Collapse" />'; // Ubah icon menjadi panah ke atas
-        }
-
-        // Toggle status expanded
-        isExpanded = !isExpanded;
-      });
-
-      // Ambil elemen tombol "check" dan elemen "accuracy"
-      const checkBtn = document.getElementById("check");
-      const accuracy = document.getElementById("accuracy");
-      const reloadBtn = document.getElementById("reload");
-
-      // Event listener untuk tombol "check"
-      checkBtn.addEventListener("click", function () {
-        // Hitung akurasi
-        const score = Math.floor(calculateScore(nowWave, nowAns) * 100) / 100;
-        accuracy.textContent =
-          Math.floor(calculateScore(nowWave, nowAns) * 100) / 100 + "%";
-
-        // Sesuaikan lebar sesuai akurasi (proposional dari 80%)
-        const widthPercentage = (score / 100) * 80; // 80% adalah lebar max dari box
-        accuracy.style.width = widthPercentage + "%";
-
-        // Ubah background gradient agar sesuai dengan score
-        const gradientPercentage = score / 100; // Adjust color gradient based on score
-        accuracy.style.background = `linear-gradient(to right, #00ff00, #ffff00 ${gradientPercentage}%, #ff0000)`;
-
-        // Tampilkan elemen accuracy dengan animasi
-        accuracy.classList.add("visible");
-
-        // Ubah teks kesimpulan berdasarkan nilai akurasi
-        let conclusionText = "";
-        if (score < 40) {
-          conclusionText = "Are you even trying";
-        } else if (score >= 40 && score <= 60) {
-          conclusionText = "Not bad for beginners";
-        } else if (score > 60 && score <= 70) {
-          conclusionText =
-            "Not bad, could have been better if you paid more attention";
-        } else if (score > 70 && score <= 80) {
-          conclusionText = "I'm proud of you";
-        } else if (score > 80 && score <= 95) {
-          conclusionText = "Brilliant.";
-        } else if (score > 95 && score < 100) {
-          conclusionText = "Maybe try harder config";
-        } else if (score == 100) {
-          conclusionText = "Nice hack";
-        }
-
-        // Update kesimpulan dan tampilkan
-        conclusion.querySelector("p").textContent = conclusionText;
-        conclusion.style.display = "block"; // Tampilkan kesimpulan
-      });
-
-      reloadBtn.addEventListener("click", function () {
-        // Hilangkan animasi dan reset akurasi
-        accuracy.classList.remove("visible");
-        accuracy.style.width = "0"; // Reset lebar ke 0%
-        accuracy.style.background = ""; // Reset gradient background
-
-        // Sembunyikan kesimpulan
-        conclusion.style.display = "none"; // Sembunyikan kesimpulan lagi
-      });
-    </script>
-    <script>
-      // Get all card elements
-      const cards = document.querySelectorAll(".card");
-
-      // Loop through each card and add a click event listener
-      cards.forEach((card) => {
-        card.addEventListener("click", () => {
-          // Toggle the 'expanded' class on click
-          card.classList.toggle("expanded");
-        });
-      });
-    </script>
   </body>
 </html>
