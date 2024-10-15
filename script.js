@@ -500,6 +500,7 @@ buttonPlay.onclick = () => {
   generateSound(nowAns, duration, volume);
   const movingLine = document.getElementById("movingLine");
   movingLine.style.animation = "moveLine " + duration + "s linear forwards";
+  movingLine.classList.remove("visible");
 
   movingLine.addEventListener("animationend", function () {
     movingLine.style.animation = ""; // Reset animasi setelah selesai

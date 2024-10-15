@@ -1,0 +1,370 @@
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #2c2c2c;
+  color: #ffffff;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+/* Container flex untuk elemen "i" dan teks */
+.info-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Style ikon "i" */
+.info-icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  font-weight: bold;
+  border: 1px solid #cccccc;
+  border-radius: 50%; /* Membuat border menjadi lingkaran */
+  width: 12px; /* Pastikan lebar dan tinggi sama */
+  height: 12px;
+  color: #cccccc;
+  cursor: pointer;
+}
+/* Style untuk teks informasi yang tersembunyi */
+.info-text {
+  visibility: hidden;
+  width: 200px;
+  background-color: #f9f9f9;
+  color: #000;
+  text-align: center;
+  border-radius: 5px;
+  padding: 10px;
+  position: absolute;
+  z-index: 1;
+  top: 125%; /* Pindahkan ke bawah simbol "i" */
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Panah di atas teks */
+.info-text::after {
+  content: "";
+  position: absolute;
+  bottom: 100%; /* Panah akan muncul di atas teks */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #f9f9f9 transparent;
+}
+
+/* Menampilkan teks saat container di-hover */
+.info-container:hover .info-text {
+  visibility: visible;
+}
+
+.title {
+  display: flex;
+}
+
+.footer {
+  color: #ffffff;
+  padding: 10px;
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 0;
+}
+
+h2 {
+  font-size: 1em;
+  margin: 0;
+  color: #a0a0a0;
+}
+
+.wave-box {
+  width: 90vw;
+  max-width: 1100px;
+  /* height: 30vw; */
+  max-height: 400px;
+  background-color: #444444; /* Warna latar belakang canvas */
+  border: 1px solid #ffffff; /* Garis batas untuk canvas */
+  overflow: auto;
+}
+
+.scroll-container {
+  height: fit-content;
+  display: flex;
+  position: relative; /* Penting untuk membuat moving-line relatif terhadap container */
+}
+
+.notes-box {
+  width: 60px;
+  background-color: #333333;
+  flex-shrink: 0; /* Mencegah notes-box mengecil jika ada overflow */
+}
+
+.moving-line {
+  width: 2px;
+  height: 100%;
+  height: 100%;
+  background-color: rgb(255, 0, 0);
+  position: absolute; /* Posisi absolut dalam scroll-container */
+  left: 60px; /* Mulai dari kanan notes-box (notes-box memiliki lebar 60px) */
+  z-index: 1;
+  opacity: 0;
+}
+
+.moving-line.visible {
+  opacity: 1;
+}
+
+@keyframes moveLine {
+  from {
+    left: 60px; /* Mulai dari sebelah kanan notes-box */
+  }
+  to {
+    left: calc(1060px - 2px); /* Gerak sampai ke ujung kanan canvas */
+  }
+}
+
+#drawingCanvas {
+  width: 1000px; /* Lebar canvas lebih besar dari container */
+  background-color: #2c2c2c;
+  cursor: crosshair; /* Memberi kursor khusus saat menggambar */
+  background-image: linear-gradient(to bottom, #5c5c5c 1px, transparent 1px);
+  background-size: 100% 20px; /* Jarak antar garis adalah 20px */
+}
+
+.notes-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 60px;
+  background-color: #333333;
+  flex-shrink: 0; /* Prevent shrinking */
+}
+
+.note {
+  width: 100%;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000000;
+  font-weight: bold;
+  /* text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, */
+  /* 1px 1px 0 #000; */
+  user-select: none;
+  border: 1px solid black;
+  font-weight: bold;
+}
+
+.note.sharp {
+  background-color: gray;
+  color: white;
+  font-weight: bold;
+}
+
+.note:not(.sharp) {
+  background-color: rgb(226, 226, 226);
+}
+
+.expand-btn {
+  position: relative;
+  margin-right: 0;
+  padding: 5px 10px;
+  background-color: #c5c5c5;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.expand-btn img {
+  width: 20px; /* Ukuran gambar */
+  height: 20px;
+}
+
+.expand-btn:hover {
+  background-color: #45a049;
+}
+
+.rectangle-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.rectangle {
+  width: 90vw; /* Panjang hampir satu layar */
+  max-width: 1100px;
+  height: 500px;
+
+  background-color: #444444; /* Warna latar belakang persegi panjang */
+  display: flex;
+  flex-direction: row; /* Segmen horizontal */
+}
+
+.segment {
+  flex: 1; /* Membagi ruang secara merata */
+  border: 1px solid #1c1c1c; /* Garis batas untuk melihat segmen */
+  display: flex;
+  flex-direction: column; /* Mengatur isi segmen secara vertikal */
+  align-items: center;
+}
+
+.segment button {
+  margin-top: 30px;
+  font-weight: bold;
+  background: linear-gradient(135deg, #a0a0a0, #808080);
+  border: none; /* Menghapus border default */
+  border-radius: 12px;
+  height: 40px;
+  width: 120px;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s; /* Efek transisi halus */
+}
+
+.segment button:hover {
+  background: linear-gradient(
+    135deg,
+    #808080,
+    #a0a0a0
+  ); /* Membalik gradasi saat hover */
+  transform: scale(1.05); /* Membesar sedikit saat hover */
+}
+
+.segment button:active {
+  background: linear-gradient(
+    135deg,
+    #7a7a7a,
+    #9e9e9e
+  ); /* Efek gradasi saat diklik */
+  transform: scale(0.98); /* Memperkecil sedikit saat diklik */
+}
+
+.volume-control,
+.duration-control {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+
+#volume-slider {
+  width: 300px;
+}
+
+.segment2 label {
+  margin-top: 30px;
+}
+
+.accuracy-wrapper,
+.statistic {
+  display: flex;
+  align-items: flex-start; /* Pastikan hanya elemen ini yang tidak berpusat */
+  width: 100%; /* Buat selebar mungkin */
+  margin-left: 20%;
+}
+
+.accuracy {
+  width: 0;
+  transition: width 2s ease-in-out, opacity 0.5s ease-in-out;
+  opacity: 0;
+  overflow: hidden;
+  align-content: center;
+  background: linear-gradient(to right, #00ff00, #ffff00, #ff0000);
+  height: 30px;
+  max-width: 300px;
+}
+
+.accuracy.visible {
+  width: 80%; /* Lebar final setelah animasi */
+  opacity: 1; /* Terlihat sepenuhnya */
+  color: black;
+  font-weight: bold;
+}
+
+.config-container {
+  margin-top: 10px;
+  display: grid;
+  gap: 20px; /* Jarak antara item */
+  border-radius: 8px;
+  width: 70%;
+  /* justify-content: center; */
+}
+
+.config-item {
+  display: flex;
+  flex-direction: column;
+  /* align-items: flex-start; */
+}
+
+.config-item label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.card-container {
+  display: flex;
+  width: 100%;
+  margin-top: 40px;
+  padding: 20px;
+
+  flex-direction: column; /* Stack the cards vertically */
+  align-items: center; /* Ensure each card stretches to 100% width */
+}
+
+.card {
+  background-color: #383838;
+  border-radius: 10px;
+  border: 1px solid gray;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 80%; /* Full width of the body */
+  max-width: 1100px;
+  padding: 10px; /* Reduced padding for the collapsed state */
+  margin-bottom: 20px; /* Space between cards */
+  box-sizing: border-box; /* Include padding in the width calculation */
+  overflow: hidden; /* Hide overflow when collapsed */
+  transition: padding 0.3s ease; /* Smooth transition for padding */
+}
+
+.card:hover {
+  background-color: #808080;
+}
+
+.card p {
+  display: none; /* Hide paragraph initially */
+  font-size: 1em;
+  color: #e4e4e4;
+}
+
+.card.expanded {
+  padding: 20px; /* Full padding when expanded */
+}
+
+.card.expanded:hover {
+  background-color: #383838;
+}
+
+.card.expanded p {
+  display: block; /* Show paragraph when expanded */
+}
+JavaScr .card h3 {
+  margin: 10px 0; /* Space above and below the heading */
+  font-size: 1em; /* Size of the title */
+}
+
+.card a {
+  color: white;
+}
