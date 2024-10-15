@@ -237,6 +237,16 @@ function generateSound(wave, duration, volume) {
   }, duration * 1000);
 }
 
+function playSound(wave, duration, volume) {
+    generateSound(wave, duration, volume);
+    const movingLine = document.getElementById("movingLine");
+    movingLine.style.animation = "moveLine " + duration + "s linear forwards";
+  
+    movingLine.addEventListener("animationend", function () {
+      movingLine.style.animation = ""; // Reset animasi setelah selesai
+    });
+}
+
 function drawWave(wave, color = "#ffffff") {
   const wi = cw / (wave.length - 1);
   ctx.strokeStyle = color; // Color of the line
@@ -497,17 +507,11 @@ boxConfig.onchange = () => {
 
 buttonCheck.onclick = check;
 buttonPlay.onclick = () => {
-  generateSound(nowAns, duration, volume);
-  const movingLine = document.getElementById("movingLine");
-  movingLine.style.animation = "moveLine " + duration + "s linear forwards";
-  movingLine.classList.remove("visible");
-
-  movingLine.addEventListener("animationend", function () {
-    movingLine.style.animation = ""; // Reset animasi setelah selesai
-  });
+    playSound(nowAns, duration, volume);
 };
 buttonReload.onclick = () => {
   reload();
+  playSound(nowAns, duration, volume);
 };
 window.addEventListener("resize", resizeCanvas);
 
