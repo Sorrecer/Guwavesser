@@ -260,7 +260,8 @@ h2 {
   margin-top: 30px;
 }
 
-.accuracy-wrapper {
+.accuracy-wrapper,
+.statistic {
   display: flex;
   align-items: flex-start; /* Pastikan hanya elemen ini yang tidak berpusat */
   width: 100%; /* Buat selebar mungkin */
