@@ -86,6 +86,28 @@ function generateWave(n) {
   return yInterp;
 }
 
+function generateWaveSnap(n) {
+    // Generate random y values between 0 and 1
+  const y = Array.from({ length: n }, () => Math.random());
+
+  // Generate random x values between 0 and 1, sorted, with first x = 0 and last x = 1
+  let x = Array.from({ length: n - 2 }, () => Math.random());
+  x = [0, ...x.sort(), 1]; // Ensure first is 0 and last is 1
+  lines = x;
+
+  const yInterp = [];
+  let c = 0;
+  for (let i = 0; i < resolution; i++) {
+    const xInterp = i / (resolution - 1);
+    if (xInterp > x[c+1]){
+        c++;
+    }
+    yInterp.push(y[c]);
+  }
+
+  return yInterp;
+}
+
 function generateWaveLinear(n) {
   // Generate random y values between 0 and 1
   const y = Array.from({ length: n }, () => Math.random());
@@ -343,6 +365,9 @@ function resizeCanvas() {
 
 function reload() {
   switch (optionEasing.value) {
+    case "snap":
+      nowAns = generateWaveSnap(points);
+      break;
     case "cubic":
       nowAns = generateWave(points);
       break;
