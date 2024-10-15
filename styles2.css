@@ -97,7 +97,7 @@ h2 {
   /* height: 30vw; */
   max-height: 400px;
   background-color: #444444; /* Warna latar belakang canvas */
-  border: 1px solid #ffffff; /* Garis batas untuk canvas */
+  /* border: 1px solid #ffffff; Garis batas untuk canvas */
   overflow: auto;
 }
 
@@ -107,15 +107,8 @@ h2 {
   position: relative; /* Penting untuk membuat moving-line relatif terhadap container */
 }
 
-.notes-box {
-  width: 60px;
-  background-color: #333333;
-  flex-shrink: 0; /* Mencegah notes-box mengecil jika ada overflow */
-}
-
 .moving-line {
   width: 2px;
-  height: 100%;
   height: 100%;
   background-color: rgb(255, 0, 0);
   position: absolute; /* Posisi absolut dalam scroll-container */
@@ -124,7 +117,7 @@ h2 {
   opacity: 0;
 }
 
-.moving-line.visible {
+.moving-line.hidden {
   opacity: 1;
 }
 
@@ -196,6 +189,56 @@ h2 {
 
 .expand-btn:hover {
   background-color: #45a049;
+}
+
+/* Style for the button container */
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Align buttons to the left */
+  gap: 15px; /* Spacing between buttons */
+  margin-top: 20px;
+  width: 100%; /* Full width of the container */
+}
+
+/* Style for individual buttons */
+.button-container button {
+  padding: 10px 20px;
+  background-color: #5c5c5c;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+/* Hover and active states for buttons */
+.button-container button:hover {
+  background-color: #4a4a4a;
+  transform: scale(1.05);
+}
+
+.button-container button:active {
+  background-color: #3a3a3a;
+  transform: scale(0.98);
+}
+
+/* Style for the "HOW TO PLAY" text */
+.tutorial {
+  margin-left: auto; /* Push the text to the right */
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffffff;
+  cursor: pointer;
+  padding-left: 15px;
+}
+
+/* Style for hover on "HOW TO PLAY" */
+.tutorial:hover {
+  text-decoration: underline;
+  color: #ffcc00;
 }
 
 .rectangle-container {
