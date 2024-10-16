@@ -7,19 +7,10 @@
     <link rel="stylesheet" href="styles2.css" />
   </head>
   <body>
-    <!-- judul -->
+    <!-- title -->
     <div class="header">
       <div class="title">
         <h1>Guwavesser</h1>
-        <div class="info-container">
-          <span class="info-icon">?</span>
-          <div class="info-text">
-            <p>How to play:</p>
-            <p>1. Click "play sound" button and listen to the tone</p>
-            <p>2. Guess and draw the wave in the canvas</p>
-            <p>3. Click "check it" to see your accuracy</p>
-          </div>
-        </div>
       </div>
       <h2>Wave Guessing Game</h2>
     </div>
@@ -117,12 +108,32 @@
     </button>
 
     <!-- new button style -->
-     <div class="button-container">
+    <div class="button-container">
       <button>New Sound</button>
       <button>Replay Sound</button>
-      <button>Check it!</button>
-      <p class="tutorial">HOW TO PLAY</p>
-     </div>
+      <button id="check" style="background-color: rgb(198, 252, 117)">
+        Check it!
+      </button>
+      <h3 class="tutorial" style="right: 0">
+        HOW TO PLAY
+        <div class="info-container">
+          <span class="info-icon">?</span>
+          <div class="info-text">
+            <p>1. Click "new sound" button and listen to the tone</p>
+            <p>2. Guess and draw the wave in the canvas</p>
+            <p>3. Click "check it" to see your accuracy</p>
+          </div>
+        </div>
+      </h3>
+    </div>
+
+    <!-- Accuracy bar -->
+    <div class="accuracy-bar-container">
+      <div class="accuracy-bar">
+        <div class="accuracy" style="width: 0"></div>
+      </div>
+      <p class="accuracy-text">0%</p>
+    </div>
 
     <!-- buttons and config -->
     <div class="rectangle-container">

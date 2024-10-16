@@ -163,13 +163,13 @@ h2 {
 }
 
 .note.sharp {
-  background-color: gray;
+  background-color: rgb(58, 58, 58);
   color: white;
   font-weight: bold;
 }
 
 .note:not(.sharp) {
-  background-color: rgb(226, 226, 226);
+  background-color: rgb(250, 250, 250);
 }
 
 .expand-btn {
@@ -190,33 +190,31 @@ h2 {
 .expand-btn:hover {
   background-color: #45a049;
 }
-
-/* Style for the button container */
+/* Updated button-container */
 .button-container {
   display: flex;
+  justify-content: center; /* Keep buttons aligned to the left */
   align-items: center;
-  justify-content: flex-start; /* Align buttons to the left */
-  gap: 15px; /* Spacing between buttons */
+  gap: 20px;
   margin-top: 20px;
-  width: 100%; /* Full width of the container */
+  width: 100%; /* Ensure full width of the container */
 }
 
-/* Style for individual buttons */
+/* Style for buttons */
 .button-container button {
   padding: 10px 20px;
-  background-color: #5c5c5c;
+  background-color: #e8e8e8;
   border: none;
   border-radius: 8px;
-  color: white;
+  color: black;
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
   transition: background 0.3s, transform 0.2s;
 }
 
-/* Hover and active states for buttons */
 .button-container button:hover {
-  background-color: #4a4a4a;
+  background-color: #cccccc;
   transform: scale(1.05);
 }
 
@@ -225,9 +223,13 @@ h2 {
   transform: scale(0.98);
 }
 
+/* Flex-grow added for correct positioning of tutorial text */
+.button-container button:last-child {
+  margin-right: auto;
+}
+
 /* Style for the "HOW TO PLAY" text */
 .tutorial {
-  margin-left: auto; /* Push the text to the right */
   font-size: 14px;
   font-weight: bold;
   color: #ffffff;
@@ -235,100 +237,34 @@ h2 {
   padding-left: 15px;
 }
 
-/* Style for hover on "HOW TO PLAY" */
-.tutorial:hover {
-  text-decoration: underline;
-  color: #ffcc00;
-}
-
-.rectangle-container {
+.accuracy-bar-container {
   display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-.rectangle {
-  width: 90vw; /* Panjang hampir satu layar */
-  max-width: 1100px;
-  height: 500px;
-
-  background-color: #444444; /* Warna latar belakang persegi panjang */
-  display: flex;
-  flex-direction: row; /* Segmen horizontal */
-}
-
-.segment {
-  flex: 1; /* Membagi ruang secara merata */
-  border: 1px solid #1c1c1c; /* Garis batas untuk melihat segmen */
-  display: flex;
-  flex-direction: column; /* Mengatur isi segmen secara vertikal */
   align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 10px;
 }
 
-.segment button {
-  margin-top: 30px;
-  font-weight: bold;
-  background: linear-gradient(135deg, #a0a0a0, #808080);
-  border: none; /* Menghapus border default */
-  border-radius: 12px;
-  height: 40px;
-  width: 120px;
-  color: #ffffff;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background 0.3s, transform 0.2s; /* Efek transisi halus */
-}
-
-.segment button:hover {
-  background: linear-gradient(
-    135deg,
-    #808080,
-    #a0a0a0
-  ); /* Membalik gradasi saat hover */
-  transform: scale(1.05); /* Membesar sedikit saat hover */
-}
-
-.segment button:active {
-  background: linear-gradient(
-    135deg,
-    #7a7a7a,
-    #9e9e9e
-  ); /* Efek gradasi saat diklik */
-  transform: scale(0.98); /* Memperkecil sedikit saat diklik */
-}
-
-.volume-control,
-.duration-control {
-  display: flex;
-  flex-direction: column;
-  margin-top: 30px;
-}
-
-#volume-slider {
-  width: 300px;
-}
-
-.segment2 label {
-  margin-top: 30px;
-}
-
-.accuracy-wrapper,
-.statistic {
-  display: flex;
-  align-items: flex-start; /* Pastikan hanya elemen ini yang tidak berpusat */
-  width: 100%; /* Buat selebar mungkin */
-  margin-left: 20%;
-}
-
-.accuracy {
-  width: 0;
-  transition: width 2s ease-in-out, opacity 0.5s ease-in-out;
-  opacity: 0;
+.accuracy-bar {
+  width: 60%;
+  height: 20px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
   overflow: hidden;
-  align-content: center;
-  background: linear-gradient(to right, #00ff00, #ffff00, #ff0000);
-  height: 30px;
-  max-width: 300px;
+  position: relative;
+}
+
+.accuracy-fill {
+  height: 100%;
+  background-color: #6b8cff;
+  border-radius: 10px 0 0 10px;
+  transition: width 0.5s ease;
+}
+
+.accuracy-text {
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffffff;
 }
 
 .accuracy.visible {
@@ -336,78 +272,4 @@ h2 {
   opacity: 1; /* Terlihat sepenuhnya */
   color: black;
   font-weight: bold;
-}
-
-.config-container {
-  margin-top: 10px;
-  display: grid;
-  gap: 20px; /* Jarak antara item */
-  border-radius: 8px;
-  width: 70%;
-  /* justify-content: center; */
-}
-
-.config-item {
-  display: flex;
-  flex-direction: column;
-  /* align-items: flex-start; */
-}
-
-.config-item label {
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-.card-container {
-  display: flex;
-  width: 100%;
-  margin-top: 40px;
-  padding: 20px;
-
-  flex-direction: column; /* Stack the cards vertically */
-  align-items: center; /* Ensure each card stretches to 100% width */
-}
-
-.card {
-  background-color: #383838;
-  border-radius: 10px;
-  border: 1px solid gray;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 80%; /* Full width of the body */
-  max-width: 1100px;
-  padding: 10px; /* Reduced padding for the collapsed state */
-  margin-bottom: 20px; /* Space between cards */
-  box-sizing: border-box; /* Include padding in the width calculation */
-  overflow: hidden; /* Hide overflow when collapsed */
-  transition: padding 0.3s ease; /* Smooth transition for padding */
-}
-
-.card:hover {
-  background-color: #808080;
-}
-
-.card p {
-  display: none; /* Hide paragraph initially */
-  font-size: 1em;
-  color: #e4e4e4;
-}
-
-.card.expanded {
-  padding: 20px; /* Full padding when expanded */
-}
-
-.card.expanded:hover {
-  background-color: #383838;
-}
-
-.card.expanded p {
-  display: block; /* Show paragraph when expanded */
-}
-JavaScr .card h3 {
-  margin: 10px 0; /* Space above and below the heading */
-  font-size: 1em; /* Size of the title */
-}
-
-.card a {
-  color: white;
 }
