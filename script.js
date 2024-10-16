@@ -86,6 +86,28 @@ function generateWave(n) {
   return yInterp;
 }
 
+function generateWaveSnap(n) {
+  // Generate random y values between 0 and 1
+  const y = Array.from({ length: n }, () => Math.random());
+
+  // Generate random x values between 0 and 1, sorted, with first x = 0 and last x = 1
+  let x = Array.from({ length: n - 2 }, () => Math.random());
+  x = [0, ...x.sort(), 1]; // Ensure first is 0 and last is 1
+  lines = x;
+
+  const yInterp = [];
+  let c = 0;
+  for (let i = 0; i < resolution; i++) {
+    const xInterp = i / (resolution - 1);
+    if (xInterp > x[c + 1]) {
+      c++;
+    }
+    yInterp.push(y[c]);
+  }
+
+  return yInterp;
+}
+
 function generateWaveLinear(n) {
   // Generate random y values between 0 and 1
   const y = Array.from({ length: n }, () => Math.random());
@@ -237,6 +259,16 @@ function generateSound(wave, duration, volume) {
   }, duration * 1000);
 }
 
+function playSound(wave, duration, volume) {
+  generateSound(wave, duration, volume);
+  const movingLine = document.getElementById("movingLine");
+  movingLine.style.animation = "moveLine " + duration + "s linear forwards";
+
+  movingLine.addEventListener("animationend", function () {
+    movingLine.style.animation = ""; // Reset animasi setelah selesai
+  });
+}
+
 function drawWave(wave, color = "#ffffff") {
   const wi = cw / (wave.length - 1);
   ctx.strokeStyle = color; // Color of the line
@@ -333,6 +365,9 @@ function resizeCanvas() {
 
 function reload() {
   switch (optionEasing.value) {
+    case "snap":
+      nowAns = generateWaveSnap(points);
+      break;
     case "cubic":
       nowAns = generateWave(points);
       break;
@@ -497,17 +532,11 @@ boxConfig.onchange = () => {
 
 buttonCheck.onclick = check;
 buttonPlay.onclick = () => {
-  generateSound(nowAns, duration, volume);
-  const movingLine = document.getElementById("movingLine");
-  movingLine.style.animation = "moveLine " + duration + "s linear forwards";
-  movingLine.style.opacity = 1;
-
-  movingLine.addEventListener("animationend", function () {
-    movingLine.style.animation = ""; // Reset animasi setelah selesai
-  });
+  playSound(nowAns, duration, volume);
 };
 buttonReload.onclick = () => {
   reload();
+  playSound(nowAns, duration, volume);
 };
 window.addEventListener("resize", resizeCanvas);
 
