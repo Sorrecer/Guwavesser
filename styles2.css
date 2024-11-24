@@ -243,6 +243,7 @@ h2 {
   justify-content: center;
   margin-top: 20px;
   gap: 10px;
+  width: 1500px;
 }
 
 .accuracy-bar {
